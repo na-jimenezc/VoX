@@ -1,0 +1,17 @@
+
+ # servicios a ejecutar
+services:
+# MySQL con nombre `proyecto-db`
+        db:
+            image: mysql:8.0.31
+            container_name: proyecto-db
+            environment:
+            - MYSQL_DATABASE=VoX
+            - MYSQL_USER=VoX
+            - MYSQL_PASSWORD=NataPuntero
+            - MYSQL_ROOT_PASSWORD=NataPuntero
+            ports:
+            - '3306:3306'
+            expose:
+            - '3306'
+  
