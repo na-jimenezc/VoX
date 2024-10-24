@@ -45,4 +45,40 @@ public class Usuario {
     public void dejarSeguir(Usuario usuario) {
         // Implement logic to remove user from following list
     }
+
+    public List<Usuario> verSeguidores(){
+
+    }
+
+    public void buscarSeguidorUsername(String username){
+
+    }
+
+    public void buscarSeguidorNombre(String nombre){
+
+    }
+
+    public void darLike(Publicacion publicacion, Boolean anonimo){
+
+    }
+
+    public void quitarLike(Publicacion publicacion){
+
+    }
+
+    public Publicacion hacerPublicacion(String descripcion, Boolean anonimo){
+
+    }
+
+    public void revelarIdentidadPub (Publicacion publicacion, Boolean anonimo){
+
+    }
+
+    public void revelarTodaIdentidadPub(){
+
+    }
+
+    public void editarUsername (String username, String nuevoUsername){
+        
+    }
 }
