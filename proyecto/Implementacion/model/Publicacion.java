@@ -27,6 +27,11 @@ public class Publicacion {
     private Date fecha;
     private Boolean anonimo;
 
+      // Relaciones de agregacion y composicion 
+    Usuario autor; 
+    List <Like> like;     
+
+
     // Constructor con parámetros para los atributos principales
     public Publicacion(Long idAutor, String descripcion, Boolean anonimo) {
         this.descripcion = descripcion;

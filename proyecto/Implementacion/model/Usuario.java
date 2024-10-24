@@ -34,7 +34,15 @@ public class Usuario {
     String semestre;
     String biografia;
     String email;
-  //  List<Usuario> siguiendo = new ArrayList<>();
+
+
+  // Relaciones de agregacion y composicion 
+    List <Like> likes; 
+    List <Publicacion> publicaciones; 
+    List <Seguimiento> seguidores;  
+    List <Seguimiento> seguidos; 
+
+
 
 
   //Metodos de la clase

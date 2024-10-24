@@ -27,6 +27,10 @@ public class Seguimiento {
     private Long idSeguido;
     private Long idSeguidor;
 
+      // Relaciones de agregacion y composicion 
+    Usuario seguidor;
+    Usuario seguido; 
+
     // Constructor con parámetros para los atributos principales
     public Seguimiento(Long idSeguido, Long idSeguidor) {
         this.idSeguido = idSeguido;

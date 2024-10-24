@@ -25,6 +25,7 @@ public class Like {
     private Long idUser;
     private Long idPub;
     private Boolean anonimoLike;
+    
 
     // Constructor con parámetros para los atributos principales
     public Like(Long idUser, Long idPub, Boolean anonimo) {
