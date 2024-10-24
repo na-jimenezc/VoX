@@ -8,14 +8,13 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;   
-
+import lombok.ToString; 
 
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
-@Setter   
+@Setter 
 
 @ToString
 public class Publicacion {
