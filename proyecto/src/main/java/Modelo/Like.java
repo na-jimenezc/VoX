@@ -1,8 +1,9 @@
+package Modelo;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -28,14 +29,12 @@ public class Like {
     @ManyToOne
     private Publicacion publicacion;
 
-    // Constructor con parámetros para los atributos principales
     public Like(Long idUser, Long idPub, Boolean anonimo) {
         this.idUser = idUser;
         this.idPub = idPub;
         this.anonimoLike = anonimo;
     }
 
-    // Método para eliminar el like
     public void eliminarLike() {
         if (publicacion != null) {
             publicacion.getLikes().remove(this);
@@ -43,7 +42,6 @@ public class Like {
         }
     }
 
-    // Método para cambiar el anonimato del like
     public void cambiarAnonimatoLike(Boolean anonimo) {
         this.anonimoLike = anonimo;
     }

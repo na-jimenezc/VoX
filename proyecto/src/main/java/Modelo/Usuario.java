@@ -1,34 +1,42 @@
+package Modelo;
+
 import java.util.ArrayList;
 import java.util.List;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
 @Entity
-@FieldDefaults(level = AccessLevel.PRIVATE)
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
+@Setter 
 @ToString
 public class Usuario {
 
     @Id
     @GeneratedValue
-    Long idUsuario;
+    private Long idUsuario;
 
-    String nombre;
-    String username;
-    String password;
-    int edad;
-    String carrera;
-    String semestre;
-    String biografia;
-    String email;
+    private String nombre;
+    private String username;
+    private String password;
+    private int edad;
+    private String carrera;
+    private String semestre;
+    private String biografia;
+    private String email;
 
-    // Relaciones de agregacion y composicion 
-    List<Like> likes = new ArrayList<>(); 
-    List<Publicacion> publicaciones = new ArrayList<>(); 
-    List<Seguimiento> seguidores = new ArrayList<>();  
-    List<Seguimiento> seguidos = new ArrayList<>(); 
+    private List<Like> likes = new ArrayList<>(); 
+    private List<Publicacion> publicaciones = new ArrayList<>(); 
+    private List<Seguimiento> seguidores = new ArrayList<>();  
+    private List<Seguimiento> seguidos = new ArrayList<>(); 
 
-    // Métodos de la clase
     public void seguir(Usuario usuario) {
         Seguimiento seguimiento = new Seguimiento(this.idUsuario, usuario.getIdUsuario());
         this.seguidos.add(seguimiento);
@@ -65,11 +73,11 @@ public class Usuario {
     public void darLike(Publicacion publicacion, Boolean anonimo) {
         Like nuevoLike = new Like(this.idUsuario, publicacion.getIdPub(), anonimo);
         this.likes.add(nuevoLike);
-        publicacion.getLike().add(nuevoLike);
+        publicacion.agregarLike(nuevoLike);
     }
 
     public void quitarLike(Publicacion publicacion) {
-        publicacion.getLike().removeIf(l -> l.getIdUser().equals(this.idUsuario));
+        publicacion.getLikes().removeIf(l -> l.getIdUser().equals(this.idUsuario));
         this.likes.removeIf(l -> l.getIdPub().equals(publicacion.getIdPub()));
     }
 
@@ -81,12 +89,12 @@ public class Usuario {
 
     public void revelarIdentidadPub(Publicacion publicacion, Boolean anonimo) {
         if (this.publicaciones.contains(publicacion)) {
-            publicacion.setAnonimo(anonimo);
+            publicacion.cambiarAnonimato(anonimo);
         }
     }
 
     public void revelarTodaIdentidadPub() {
-        this.publicaciones.forEach(pub -> pub.setAnonimo(false));
+        this.publicaciones.forEach(pub -> pub.cambiarAnonimato(false));
     }
 
     public void editarUsername(String username, String nuevoUsername) {

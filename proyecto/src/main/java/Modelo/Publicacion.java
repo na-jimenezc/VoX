@@ -1,11 +1,14 @@
+package Modelo;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+
+import jakarta.persistence.ManyToMany;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,7 +19,7 @@ import lombok.ToString;
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
-@Setter 
+@Setter
 @ToString
 public class Publicacion {
 
@@ -28,26 +31,22 @@ public class Publicacion {
     private Date fecha;
     private Boolean anonimo;
 
-    // Relaciones de agregacion y composicion 
-    @ManyToOne
-    Usuario autor; 
+    @ManyToMany
+    private Usuario autor; 
 
     @OneToMany(mappedBy = "publicacion")
-    List<Like> likes = new ArrayList<>();
+    private List<Like> likes = new ArrayList<>();
 
-    // Constructor con parámetros para los atributos principales
     public Publicacion(Long idAutor, String descripcion, Boolean anonimo) {
         this.descripcion = descripcion;
-        this.fecha = new Date(); // Fecha de creación actual
+        this.fecha = new Date();
         this.anonimo = anonimo;
     }
 
-    // Método para cambiar el anonimato de una publicación
     public void cambiarAnonimato(Boolean anonimo) {
         this.anonimo = anonimo;
     }
 
-    // Método para agregar un like a la publicación
     public void agregarLike(Like nuevoLike) {
         this.likes.add(nuevoLike);
     }

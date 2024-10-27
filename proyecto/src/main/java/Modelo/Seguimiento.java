@@ -1,10 +1,10 @@
+package Modelo;
+
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -26,22 +26,18 @@ public class Seguimiento {
     private Long idSeguido;
     private Long idSeguidor;
 
-    // Relaciones de agregacion y composicion 
-    Usuario seguidor;
-    Usuario seguido;
+    private Usuario seguidor;
+    private Usuario seguido;
 
-    // Constructor con parámetros para los atributos principales
     public Seguimiento(Long idSeguido, Long idSeguidor) {
         this.idSeguido = idSeguido;
         this.idSeguidor = idSeguidor;
     }
 
-    // Métodos de la clase 
-
     public void eliminarSeguimiento() {
         if (seguidor != null && seguido != null) {
             seguidor.getSeguidos().remove(this);
-            seguido.getSeguidores().remove(this);
+            seguido.getSeguidos().remove(this);
         }
     }
 
