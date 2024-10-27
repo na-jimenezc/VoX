@@ -50,4 +50,14 @@ public class Seguimiento {
         }
         return seguidores;
     }
+    // Método Setter para el seguidor
+    public void setSeguidor(Usuario seguidor) {
+        this.seguidor = seguidor;
+    }
+
+    // Método Setter para el seguido
+    public void setSeguido(Usuario seguido) {
+        this.seguido = seguido;
+    }
+
 }
