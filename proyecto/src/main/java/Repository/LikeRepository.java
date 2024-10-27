@@ -9,9 +9,9 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface LikeRepository extends JpaRepository<Like, Long> {
 
-    Like findByPublicacionAndUsername(Publicacion publicacion, String username);
-    // Metodos
+    // Busca un "Like" por la publicación y el ID del usuario
+    Like findByPublicacionAndIdUser(Publicacion publicacion, Long idUser);
 
+    // Contar "likes" por ID de publicación
     long countByPublicacionId(Long publicacionId);
 }
-

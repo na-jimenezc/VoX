@@ -4,11 +4,10 @@ import Modelo.Like;
 import Modelo.Publicacion;
 import Repository.LikeRepository;
 import Repository.PublicacionRepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/likes")
@@ -20,64 +19,28 @@ public class LikeController {
     @Autowired
     private PublicacionRepository publicacionRepository;
 
-    @GetMapping
-    public List<Like> getAllLikes() {
-        return likeRepository.findAll();
-    }
-
-    @GetMapping("/{id}")
-    public ResponseEntity<Like> getLikeById(@PathVariable Long id) {
-        return likeRepository.findById(id)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
-    }
-
-    @PostMapping
-    public Like createLike(@RequestBody Like like) {
-        return likeRepository.save(like);
-    }
-
-    @PutMapping("/{id}")
-    public ResponseEntity<Like> updateLike(@PathVariable Long id, @RequestBody Like likeDetails) {
-        return likeRepository.findById(id)
-                .map(like -> {
-                    // Actualiza los campos necesarios
-                    return ResponseEntity.ok(likeRepository.save(like));
-                })
-                .orElse(ResponseEntity.notFound().build());
-    }
-
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Object> deleteLike(@PathVariable Long id) {
-        return likeRepository.findById(id)
-                .map(like -> {
-                    likeRepository.delete(like);
-                    return ResponseEntity.ok().build();
-                })
-                .orElse(ResponseEntity.notFound().build());
-    }
-
-    // Métodos personalizados
+    // Método para dar un "Like" a una publicación
     @PostMapping("/darLike")
-    public ResponseEntity<Like> darLike(@RequestBody Publicacion publicacion, @RequestParam String username) {
+    public ResponseEntity<Like> darLike(@RequestBody Publicacion publicacion, @RequestParam Long idUser) {
         // Verifica si la publicación existe
-        if (!publicacionRepository.existsById(publicacion.getId())) {
+        if (!publicacionRepository.existsById(publicacion.getIdPub())) {
             return ResponseEntity.notFound().build();
         }
 
         // Crea un nuevo Like
-        Like newLike = new Like();
-        newLike.setPublicacion(publicacion);
-        newLike.setUsername(username);
+        Like nuevoLike = new Like();
+        nuevoLike.setPublicacion(publicacion);
+        nuevoLike.setIdUser(idUser);
 
         // Guarda el like y retorna la respuesta
-        return ResponseEntity.ok(likeRepository.save(newLike));
+        return ResponseEntity.ok(likeRepository.save(nuevoLike));
     }
 
+    // Método para quitar un "Like" de una publicación
     @DeleteMapping("/quitarLike")
-    public ResponseEntity<Void> quitarLike(@RequestBody Publicacion publicacion, @RequestParam String username) {
+    public ResponseEntity<Void> quitarLike(@RequestBody Publicacion publicacion, @RequestParam Long idUser) {
         // Busca el Like asociado
-        Like likeToRemove = likeRepository.findByPublicacionAndUsername(publicacion, username);
+        Like likeToRemove = likeRepository.findByPublicacionAndIdUser(publicacion, idUser);
         if (likeToRemove != null) {
             likeRepository.delete(likeToRemove);
             return ResponseEntity.ok().build();
@@ -85,8 +48,10 @@ public class LikeController {
         return ResponseEntity.notFound().build();
     }
 
-    @GetMapping("/contarLikes/{publicacionId}")
-    public long contarLikes(@PathVariable Long publicacionId) {
-        return likeRepository.countByPublicacionId(publicacionId);
+    // Método para contar los "likes" de una publicación
+    @GetMapping("/contarLikes")
+    public ResponseEntity<Long> contarLikes(@RequestParam Long publicacionId) {
+        long count = likeRepository.countByPublicacionId(publicacionId);
+        return ResponseEntity.ok(count);
     }
 }

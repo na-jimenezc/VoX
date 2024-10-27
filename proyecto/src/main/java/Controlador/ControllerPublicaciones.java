@@ -3,7 +3,6 @@ package Controlador;
 import Modelo.Publicacion;
 import Repository.PublicacionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -15,42 +14,39 @@ public class ControllerPublicaciones {
     @Autowired
     private PublicacionRepository publicacionRepository;
 
-    @GetMapping
-    public List<Publicacion> getAllPublicaciones() {
-        return publicacionRepository.findAll();
+    // Crear una nueva publicación
+    @PostMapping("/crear")
+    public Publicacion hacerPublicacion(@RequestParam String descripcion, @RequestParam Boolean anonimo) {
+        Publicacion nuevaPublicacion = new Publicacion(null, descripcion, anonimo);
+        return publicacionRepository.save(nuevaPublicacion);
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<Publicacion> getPublicacionById(@PathVariable Long id) {
-        return publicacionRepository.findById(id)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+    // Revelar la identidad del autor de una publicación específica
+    @PutMapping("/revelarIdentidad")
+    public void revelarIdentidadPub(@RequestBody Publicacion publicacion) {
+        publicacion.revelarIdentidad();
+        publicacionRepository.save(publicacion);
     }
 
-    @PostMapping
-    public Publicacion createPublicacion(@RequestBody Publicacion publicacion) {
-        return publicacionRepository.save(publicacion);
+    // Revelar la identidad de todos los autores de las publicaciones
+    @PutMapping("/revelarTodasIdentidad")
+    public void revelarTodasIdentidadPub() {
+        List<Publicacion> publicaciones = publicacionRepository.findAll();
+        for (Publicacion publicacion : publicaciones) {
+            publicacion.revelarIdentidad();
+            publicacionRepository.save(publicacion);
+        }
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<Publicacion> updatePublicacion(@PathVariable Long id, @RequestBody Publicacion publicacionDetails) {
-        return publicacionRepository.findById(id)
-                .map(publicacion -> {
-                    publicacion.setDescripcion(publicacionDetails.getDescripcion());
-                    publicacion.setAnonimo(publicacionDetails.getAnonimo());
-                    // Actualiza otros campos según sea necesario
-                    return ResponseEntity.ok(publicacionRepository.save(publicacion));
-                })
-                .orElse(ResponseEntity.notFound().build());
+    // Eliminar una publicación específica
+    @DeleteMapping("/eliminar")
+    public void eliminarPublicacion(@RequestBody Publicacion publicacion) {
+        publicacionRepository.delete(publicacion);
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Object> deletePublicacion(@PathVariable Long id) {
-        return publicacionRepository.findById(id)
-                .map(publicacion -> {
-                    publicacionRepository.delete(publicacion);
-                    return ResponseEntity.ok().build();
-                })
-                .orElse(ResponseEntity.notFound().build());
+    // Verificar si un usuario es el autor de una publicación
+    @GetMapping("/verificarPertenencia")
+    public Boolean verificarPertenenciaPub(@RequestBody Publicacion publicacion, @RequestParam Long idUsuario) {
+        return publicacion.getAutor().getIdUsuario().equals(idUsuario);
     }
 }

@@ -7,7 +7,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
-
 import jakarta.persistence.ManyToMany;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -37,10 +36,12 @@ public class Publicacion {
     @OneToMany(mappedBy = "publicacion")
     private List<Like> likes = new ArrayList<>();
 
+    // Constructor con parámetros
     public Publicacion(Long idAutor, String descripcion, Boolean anonimo) {
         this.descripcion = descripcion;
         this.fecha = new Date();
         this.anonimo = anonimo;
+        this.autor = new Usuario(); // Aquí debes asignar el usuario adecuado según la lógica de tu aplicación
     }
 
     public void cambiarAnonimato(Boolean anonimo) {
@@ -49,5 +50,20 @@ public class Publicacion {
 
     public void agregarLike(Like nuevoLike) {
         this.likes.add(nuevoLike);
+    }
+
+    // Método para revelar la identidad del autor
+    public void revelarIdentidad() {
+        this.anonimo = false; // Cambiar el estado de anonimato a falso
+    }
+
+    // Método para verificar si un usuario es el autor de esta publicación
+    public boolean esAutor(Long idUsuario) {
+        return this.autor.getIdUsuario().equals(idUsuario); // Asumiendo que `getIdUsuario()` devuelve el ID del usuario
+    }
+
+    // Método para contar likes
+    public long contarLikes() {
+        return likes.size();
     }
 }
