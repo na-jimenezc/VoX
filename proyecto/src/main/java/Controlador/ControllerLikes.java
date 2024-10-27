@@ -10,7 +10,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/likes")
-public class LikeController {
+public class ControllerLikes {
 
     @Autowired
     private LikeRepository likeRepository;

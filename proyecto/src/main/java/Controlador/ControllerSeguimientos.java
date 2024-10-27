@@ -10,7 +10,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/seguimientos")
-public class SeguimientoController {
+public class ControllerSeguimientos {
 
     @Autowired
     private SeguimientoRepository seguimientoRepository;

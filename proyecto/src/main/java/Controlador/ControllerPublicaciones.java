@@ -10,7 +10,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/publicaciones")
-public class PublicacionController {
+public class ControllerPublicaciones {
 
     @Autowired
     private PublicacionRepository publicacionRepository;
