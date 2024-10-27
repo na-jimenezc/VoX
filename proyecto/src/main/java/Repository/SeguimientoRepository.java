@@ -11,7 +11,6 @@ import org.springframework.stereotype.Repository;
 public interface SeguimientoRepository extends JpaRepository<Seguimiento, Long> {
 
     Seguimiento findBySeguidorAndSeguido(Long long1, Long long2);
-    // Metodos
 
     List<Seguimiento> findBySeguido(Long long1);
 

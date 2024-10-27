@@ -18,12 +18,13 @@ public class ControllerSeguimientos {
     private SeguimientoRepository seguimientoRepository;
 
     @Autowired
-    private UsuarioRepository usuarioRepository; // Repositorio para buscar usuarios
+    private UsuarioRepository usuarioRepository; 
 
     // Seguir a un usuario
     @PostMapping("/seguir/{username}")
-    public ResponseEntity<Void> seguir(@PathVariable String username) {
-        Usuario seguidor = usuarioRepository.findByUsername("usuarioActual"); // Obtén el usuario actual
+    public ResponseEntity<Void> seguir(String username) {
+        // Obtener el usuario actual
+        Usuario seguidor = usuarioRepository.findByUsername("usuarioActual"); 
         Usuario seguido = usuarioRepository.findByUsername(username); // Busca el usuario a seguir
         
         if (seguido != null && seguidor != null) {
@@ -55,7 +56,7 @@ public class ControllerSeguimientos {
     // Ver seguidores del usuario actual
     @GetMapping("/seguidores")
     public List<Seguimiento> verSeguidores() {
-        Usuario usuarioActual = usuarioRepository.findByUsername("usuarioActual"); // Reemplaza con el usuario autenticado
+        Usuario usuarioActual = usuarioRepository.findByUsername("usuarioActual"); 
         return seguimientoRepository.findBySeguido(usuarioActual.getIdUsuario());
     }
 
