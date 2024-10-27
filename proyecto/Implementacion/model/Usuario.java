@@ -1,18 +1,6 @@
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-
-import lombok.AccessLevel; 
-
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
-import lombok.experimental.FieldDefaults;
 
 import java.util.ArrayList;
 import java.util.List;
-
 
 @Entity
 @FieldDefaults(level = AccessLevel.PRIVATE)
@@ -35,58 +23,76 @@ public class Usuario {
     String biografia;
     String email;
 
+    // Relaciones de agregacion y composicion 
+    List<Like> likes = new ArrayList<>(); 
+    List<Publicacion> publicaciones = new ArrayList<>(); 
+    List<Seguimiento> seguidores = new ArrayList<>();  
+    List<Seguimiento> seguidos = new ArrayList<>(); 
 
-  // Relaciones de agregacion y composicion 
-    List <Like> likes; 
-    List <Publicacion> publicaciones; 
-    List <Seguimiento> seguidores;  
-    List <Seguimiento> seguidos; 
-
-
-
-
-  //Metodos de la clase
+    // Métodos de la clase
     public void seguir(Usuario usuario) {
-        // Implement logic to add user to following list (consider using JPA relationships)
+        Seguimiento seguimiento = new Seguimiento(this.idUsuario, usuario.getIdUsuario());
+        this.seguidos.add(seguimiento);
+        usuario.getSeguidores().add(seguimiento);
     }
 
     public void dejarSeguir(Usuario usuario) {
-        // Implement logic to remove user from following list
+        this.seguidos.removeIf(s -> s.getIdSeguido().equals(usuario.getIdUsuario()));
+        usuario.getSeguidores().removeIf(s -> s.getIdSeguidor().equals(this.idUsuario));
     }
 
-    public List<Usuario> verSeguidores(){
-
+    public List<Usuario> verSeguidores() {
+        List<Usuario> listaSeguidores = new ArrayList<>();
+        for (Seguimiento seg : seguidores) {
+            listaSeguidores.add(seg.getSeguidor());
+        }
+        return listaSeguidores;
     }
 
-    public void buscarSeguidorUsername(String username){
-
+    public Usuario buscarSeguidorUsername(String username) {
+        return verSeguidores().stream()
+                .filter(usuario -> usuario.getUsername().equals(username))
+                .findFirst()
+                .orElse(null);
     }
 
-    public void buscarSeguidorNombre(String nombre){
-
+    public Usuario buscarSeguidorNombre(String nombre) {
+        return verSeguidores().stream()
+                .filter(usuario -> usuario.getNombre().equals(nombre))
+                .findFirst()
+                .orElse(null);
     }
 
-    public void darLike(Publicacion publicacion, Boolean anonimo){
-
+    public void darLike(Publicacion publicacion, Boolean anonimo) {
+        Like nuevoLike = new Like(this.idUsuario, publicacion.getIdPub(), anonimo);
+        this.likes.add(nuevoLike);
+        publicacion.getLike().add(nuevoLike);
     }
 
-    public void quitarLike(Publicacion publicacion){
-
+    public void quitarLike(Publicacion publicacion) {
+        publicacion.getLike().removeIf(l -> l.getIdUser().equals(this.idUsuario));
+        this.likes.removeIf(l -> l.getIdPub().equals(publicacion.getIdPub()));
     }
 
-    public Publicacion hacerPublicacion(String descripcion, Boolean anonimo){
-
+    public Publicacion hacerPublicacion(String descripcion, Boolean anonimo) {
+        Publicacion nuevaPub = new Publicacion(this.idUsuario, descripcion, anonimo);
+        this.publicaciones.add(nuevaPub);
+        return nuevaPub;
     }
 
-    public void revelarIdentidadPub (Publicacion publicacion, Boolean anonimo){
-
+    public void revelarIdentidadPub(Publicacion publicacion, Boolean anonimo) {
+        if (this.publicaciones.contains(publicacion)) {
+            publicacion.setAnonimo(anonimo);
+        }
     }
 
-    public void revelarTodaIdentidadPub(){
-
+    public void revelarTodaIdentidadPub() {
+        this.publicaciones.forEach(pub -> pub.setAnonimo(false));
     }
 
-    public void editarUsername (String username, String nuevoUsername){
-        
+    public void editarUsername(String username, String nuevoUsername) {
+        if (this.username.equals(username)) {
+            this.username = nuevoUsername;
+        }
     }
 }
