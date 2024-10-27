@@ -5,6 +5,7 @@ import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -26,7 +27,10 @@ public class Seguimiento {
     private Long idSeguido;
     private Long idSeguidor;
 
+    @OneToOne // Asegúrate de que la relación sea correcta
     private Usuario seguidor;
+
+    @OneToOne // Asegúrate de que la relación sea correcta
     private Usuario seguido;
 
     public Seguimiento(Long idSeguido, Long idSeguidor) {
@@ -50,14 +54,13 @@ public class Seguimiento {
         }
         return seguidores;
     }
-    // Método Setter para el seguidor
+
+    // Setters actualizados para aceptar objetos Usuario
     public void setSeguidor(Usuario seguidor) {
         this.seguidor = seguidor;
     }
 
-    // Método Setter para el seguido
     public void setSeguido(Usuario seguido) {
         this.seguido = seguido;
     }
-
 }
