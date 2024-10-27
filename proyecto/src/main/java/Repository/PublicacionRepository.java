@@ -1,4 +1,4 @@
-package repository;
+package Repository;
 
 import Modelo.Publicacion;
 import org.springframework.data.jpa.repository.JpaRepository;
