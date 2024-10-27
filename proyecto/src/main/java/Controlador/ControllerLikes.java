@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/likes")
-public class LikeController {
+public class ControllerLikes {
 
     @Autowired
     private LikeRepository likeRepository;

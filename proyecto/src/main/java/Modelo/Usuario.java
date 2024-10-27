@@ -37,6 +37,18 @@ public class Usuario {
     private List<Seguimiento> seguidores = new ArrayList<>();  
     private List<Seguimiento> seguidos = new ArrayList<>(); 
 
+                // Constructor adicional para registrar usuario
+        public Usuario(String nombre, String username, String password, int edad, String carrera, String semestre, String biografia, String email) {
+        this.nombre = nombre;
+        this.username = username;
+        this.password = password;
+        this.edad = edad;
+        this.carrera = carrera;
+        this.semestre = semestre;
+        this.biografia = biografia;
+        this.email = email;
+        }
+
     public void seguir(Usuario usuario) {
         Seguimiento seguimiento = new Seguimiento(this.idUsuario, usuario.getIdUsuario());
         this.seguidos.add(seguimiento);

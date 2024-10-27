@@ -41,7 +41,7 @@ public class Publicacion {
         this.descripcion = descripcion;
         this.fecha = new Date();
         this.anonimo = anonimo;
-        this.autor = new Usuario(); // Aquí debes asignar el usuario adecuado según la lógica de tu aplicación
+        this.autor = new Usuario(); 
     }
 
     public void cambiarAnonimato(Boolean anonimo) {
@@ -54,12 +54,12 @@ public class Publicacion {
 
     // Método para revelar la identidad del autor
     public void revelarIdentidad() {
-        this.anonimo = false; // Cambiar el estado de anonimato a falso
+        this.anonimo = false; 
     }
 
     // Método para verificar si un usuario es el autor de esta publicación
     public boolean esAutor(Long idUsuario) {
-        return this.autor.getIdUsuario().equals(idUsuario); // Asumiendo que `getIdUsuario()` devuelve el ID del usuario
+        return this.autor.getIdUsuario().equals(idUsuario);
     }
 
     // Método para contar likes

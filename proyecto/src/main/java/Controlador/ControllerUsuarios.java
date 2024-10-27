@@ -3,54 +3,43 @@ package Controlador;
 import Modelo.Usuario;
 import Repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.stereotype.Controller;
 
-import java.util.List;
-
-@RestController
-@RequestMapping("/usuarios")
+@Controller
 public class ControllerUsuarios {
 
     @Autowired
     private UsuarioRepository usuarioRepository;
 
-    @GetMapping
-    public List<Usuario> getAllUsuarios() {
-        return usuarioRepository.findAll();
+    // Método para registrar un nuevo usuario
+    public void registrarUsuario(String nombre, String username, String password, 
+    int edad, String carrera, String semestre, String biografia, String email) {
+        Usuario nuevoUsuario = new Usuario(nombre, username, password, edad, carrera, semestre, biografia, email);
+        usuarioRepository.save(nuevoUsuario);
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<Usuario> getUsuarioById(@PathVariable Long id) {
-        return usuarioRepository.findById(id)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+    // Método para autenticar un usuario
+    public boolean autenticarUsuario(String username, String password) {
+        Usuario usuario = usuarioRepository.findByUsername(username);
+        return usuario != null && usuario.getPassword().equals(password);
     }
 
-    @PostMapping
-    public Usuario createUsuario(@RequestBody Usuario usuario) {
-        return usuarioRepository.save(usuario);
+    // Método para verificar si un usuario ya existe
+    public boolean verificarUsuarioExistente(String username) {
+        return usuarioRepository.findByUsername(username) != null;
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<Usuario> updateUsuario(@PathVariable Long id, @RequestBody Usuario usuarioDetails) {
-        return usuarioRepository.findById(id)
-                .map(usuario -> {
-                    usuario.setNombre(usuarioDetails.getNombre());
-                    usuario.setUsername(usuarioDetails.getUsername());
-                    // Actualiza otros campos según sea necesario
-                    return ResponseEntity.ok(usuarioRepository.save(usuario));
-                })
-                .orElse(ResponseEntity.notFound().build());
+    // Método para borrar un usuario
+    public void borrarUsuario(Long id) {
+        usuarioRepository.deleteById(id);
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Object> deleteUsuario(@PathVariable Long id) {
-        return usuarioRepository.findById(id)
-                .map(usuario -> {
-                    usuarioRepository.delete(usuario);
-                    return ResponseEntity.ok().build();
-                })
-                .orElse(ResponseEntity.notFound().build());
+    // Método para editar el nombre de usuario
+    public void editarUsuario(String username, String nuevoUsername) {
+        Usuario usuario = usuarioRepository.findByUsername(username);
+        if (usuario != null) {
+            usuario.setUsername(nuevoUsername);
+            usuarioRepository.save(usuario);
+        }
     }
 }

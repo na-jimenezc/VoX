@@ -46,8 +46,5 @@ public class Like {
         this.anonimoLike = anonimo;
     }
 
-    public void setUsername(String username) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'setUsername'");
-    }
+
 }
