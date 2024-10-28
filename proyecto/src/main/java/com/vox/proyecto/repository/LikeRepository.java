@@ -1,10 +1,10 @@
-package Repository;
-
-import Modelo.Like;
-import Modelo.Publicacion;
+package com.vox.proyecto.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
+
+import com.vox.proyecto.modelo.Like;
+import com.vox.proyecto.modelo.Publicacion;
 
 @Repository
 public interface LikeRepository extends JpaRepository<Like, Long> {

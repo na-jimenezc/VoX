@@ -1,4 +1,4 @@
-package Modelo;
+package com.vox.proyecto.modelo;
 
 import java.util.ArrayList;
 import java.util.List;

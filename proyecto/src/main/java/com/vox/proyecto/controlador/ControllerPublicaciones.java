@@ -1,9 +1,10 @@
-package Controlador;
+package com.vox.proyecto.controlador;
 
-import Modelo.Publicacion;
-import Repository.PublicacionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import com.vox.proyecto.modelo.Publicacion;
+import com.vox.proyecto.repository.PublicacionRepository;
 
 import java.util.List;
 

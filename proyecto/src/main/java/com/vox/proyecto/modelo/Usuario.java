@@ -1,4 +1,4 @@
-package Modelo;
+package com.vox.proyecto.modelo;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,6 +32,7 @@ public class Usuario {
     private String biografia;
     private String email;
 
+    
     private List<Like> likes = new ArrayList<>(); 
     private List<Publicacion> publicaciones = new ArrayList<>(); 
     private List<Seguimiento> seguidores = new ArrayList<>();  

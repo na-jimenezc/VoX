@@ -1,9 +1,10 @@
-package Controlador;
+package com.vox.proyecto.controlador;
 
-import Modelo.Usuario;
-import Repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+
+import com.vox.proyecto.modelo.Usuario;
+import com.vox.proyecto.repository.UsuarioRepository;
 
 @Controller
 public class ControllerUsuarios {
