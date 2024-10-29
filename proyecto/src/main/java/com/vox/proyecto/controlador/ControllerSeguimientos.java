@@ -1,12 +1,13 @@
-package Controlador;
+package com.vox.proyecto.controlador;
 
-import Modelo.Seguimiento;
-import Modelo.Usuario;
-import Repository.SeguimientoRepository;
-import Repository.UsuarioRepository; 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import com.vox.proyecto.modelo.Seguimiento;
+import com.vox.proyecto.modelo.Usuario;
+import com.vox.proyecto.repository.SeguimientoRepository;
+import com.vox.proyecto.repository.UsuarioRepository;
 
 import java.util.List;
 

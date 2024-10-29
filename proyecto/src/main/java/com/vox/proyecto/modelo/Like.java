@@ -1,4 +1,4 @@
-package Modelo;
+package com.vox.proyecto.Modelo;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
