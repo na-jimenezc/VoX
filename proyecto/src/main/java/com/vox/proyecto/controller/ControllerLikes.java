@@ -1,4 +1,4 @@
-package com.vox.proyecto.controlador;
+package com.vox.proyecto.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

@@ -1,4 +1,4 @@
-package com.vox.proyecto.controlador;
+package com.vox.proyecto.controller;
 
 public class ControllerPantallas {
 
