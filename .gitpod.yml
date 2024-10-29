@@ -1,3 +1,4 @@
+---
 # Gitpod Configuration
 # ver: https://www.gitpod.io/docs/introduction/learn-gitpod/gitpod-yaml
 
@@ -7,10 +8,11 @@ image: gitpod/workspace-java-21
 
 # Comandos a ejecutar al inicio del proyecto
 tasks:
+  - init: "echo 'Initializing...'"
+  - command: "mvn spring-boot:run"
 
+# Tarea adicional para compilar el proyecto sin ejecutar pruebas
   - name: Compila proyecto sin ejecutar pruebas
-    # before se ejecuta siempre
-    # init se ejecuta solo la primera vez
     before: |
       sdk install springboot 
     init: |
@@ -26,3 +28,9 @@ vscode:
     - vscjava.vscode-spring-boot-dashboard
     - vscjava.vscode-spring-initializr
     - rangav.vscode-thunder-client
+    - redhat.java
+    - vscjava.vscode-gradle
+    - vscjava.vscode-java-debug
+    - vscjava.vscode-java-dependency
+    - vscjava.vscode-java-test
+    - vscjava.vscode-maven
