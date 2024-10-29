@@ -32,7 +32,7 @@ class ControllerUsuariosTest {
     void testRegistrarUsuario() {
         String nombre = "Juan";
         String username = "juan123";
-        String password = "password";
+        String password = "password/";
         int edad = 20;
         String carrera = "Ingeniería";
         String semestre = "2";
