@@ -14,7 +14,7 @@ tasks:
 # Tarea adicional para compilar el proyecto sin ejecutar pruebas
   - name: Compila proyecto sin ejecutar pruebas
     before: |
-      sdk install springboot 
+      sdk install springboot
     init: |
       if [ -f proyecto/pom.xml ]; then mvn package -DskipTests -f proyecto/pom.xml; fi
     command: |
