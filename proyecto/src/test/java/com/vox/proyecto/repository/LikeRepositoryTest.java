@@ -1,4 +1,4 @@
-package repository;
+package com.vox.proyecto.repository;
 
 import com.vox.proyecto.modelo.Like;
 import com.vox.proyecto.modelo.Publicacion;

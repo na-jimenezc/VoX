@@ -1,4 +1,4 @@
-package repository;
+package com.vox.proyecto.repository;
 
 import com.vox.proyecto.controller.ControllerUsuarios;
 import com.vox.proyecto.modelo.Usuario;
