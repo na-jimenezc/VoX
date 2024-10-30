@@ -2,22 +2,17 @@ package com.vox.proyecto.modelo;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.OneToOne;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+
+import jakarta.persistence.ManyToOne;
+import lombok.Data;
 
 @Entity
-@NoArgsConstructor
-@AllArgsConstructor
-@Getter
-@Setter 
-@ToString
+@Data
+
 public class Seguimiento {
 
     @Id
@@ -27,10 +22,10 @@ public class Seguimiento {
     private Long idSeguido;
     private Long idSeguidor;
 
-    @OneToOne // Asegúrate de que la relación sea correcta
+    @ManyToOne
     private Usuario seguidor;
 
-    @OneToOne // Asegúrate de que la relación sea correcta
+    @ManyToOne
     private Usuario seguido;
 
     public Seguimiento(Long idSeguido, Long idSeguidor) {

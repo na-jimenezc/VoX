@@ -8,12 +8,12 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
-
-import jakarta.persistence.ManyToMany;
+import jakarta.persistence.ManyToOne;
 import lombok.Data;
 
 @Entity
 @Data
+
 public class Publicacion {
 
     @Id
@@ -24,18 +24,18 @@ public class Publicacion {
     private Date fecha;
     private Boolean anonimo;
 
-    @ManyToMany
-    private Usuario autor; 
+    @ManyToOne
+    private Usuario autor;
 
     @OneToMany(mappedBy = "publicacion")
     private List<Like> likes = new ArrayList<>();
 
     // Constructor con parámetros
-    public Publicacion(Long idAutor, String descripcion, Boolean anonimo) {
+    public Publicacion(Usuario autor, String descripcion, Boolean anonimo) {
+        this.autor = autor;
         this.descripcion = descripcion;
         this.fecha = new Date();
         this.anonimo = anonimo;
-        this.autor = new Usuario(); 
     }
 
     public void cambiarAnonimato(Boolean anonimo) {
@@ -48,7 +48,7 @@ public class Publicacion {
 
     // Método para revelar la identidad del autor
     public void revelarIdentidad() {
-        this.anonimo = false; 
+        this.anonimo = false;
     }
 
     // Método para verificar si un usuario es el autor de esta publicación

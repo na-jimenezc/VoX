@@ -2,21 +2,17 @@ package com.vox.proyecto.modelo;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+
+import jakarta.persistence.OneToMany;
+import lombok.Data;
 
 @Entity
-@NoArgsConstructor
-@AllArgsConstructor
-@Getter
-@Setter 
-@ToString
+@Data
+
 public class Usuario {
 
     @Id
@@ -32,11 +28,15 @@ public class Usuario {
     private String biografia;
     private String email;
 
-    
-    private List<Like> likes = new ArrayList<>(); 
-    private List<Publicacion> publicaciones = new ArrayList<>(); 
-    private List<Seguimiento> seguidores = new ArrayList<>();  
-    private List<Seguimiento> seguidos = new ArrayList<>(); 
+    @OneToMany(mappedBy = "autor")
+    private List<Publicacion> publicaciones = new ArrayList<>();
+
+    @OneToMany(mappedBy = "usuario")
+    private List<Like> likes = new ArrayList<>();
+
+
+    private List<Seguimiento> seguidores = new ArrayList<>();
+    private List<Seguimiento> seguidos = new ArrayList<>();
 
                 // Constructor adicional para registrar usuario
         public Usuario(String nombre, String username, String password, int edad, String carrera, String semestre, String biografia, String email) {
@@ -84,18 +84,18 @@ public class Usuario {
     }
 
     public void darLike(Publicacion publicacion, Boolean anonimo) {
-        Like nuevoLike = new Like(this.idUsuario, publicacion.getIdPub(), anonimo);
+        Like nuevoLike = new Like(this, publicacion, anonimo);
         this.likes.add(nuevoLike);
-        publicacion.agregarLike(nuevoLike);
+        publicacion.getLikes().add(nuevoLike);
     }
 
     public void quitarLike(Publicacion publicacion) {
-        publicacion.getLikes().removeIf(l -> l.getIdUser().equals(this.idUsuario));
-        this.likes.removeIf(l -> l.getIdPub().equals(publicacion.getIdPub()));
+        publicacion.getLikes().removeIf(l -> l.getUsuario().equals(this));
+        this.likes.removeIf(l -> l.getPublicacion().equals(publicacion));
     }
 
     public Publicacion hacerPublicacion(String descripcion, Boolean anonimo) {
-        Publicacion nuevaPub = new Publicacion(this.idUsuario, descripcion, anonimo);
+        Publicacion nuevaPub = new Publicacion(this, descripcion, anonimo);
         this.publicaciones.add(nuevaPub);
         return nuevaPub;
     }
