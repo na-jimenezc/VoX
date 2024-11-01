@@ -22,11 +22,15 @@ public class Like {
     @ManyToOne
     private Publicacion publicacion;
 
-    public Like(Usuario usuario, Publicacion publicacion, Boolean anonimo) {
+    public Like(Usuario usuario2, Publicacion publicacion2, Boolean anonimo) {
         this.publicacion = publicacion;
         this.anonimoLike = anonimo;
         usuario.getLikes().add(this);
         publicacion.getLikes().add(this);
+    }
+
+    public Like() {
+        //TODO Auto-generated constructor stub
     }
 
     public void eliminarLike() {
@@ -38,6 +42,11 @@ public class Like {
 
     public void cambiarAnonimatoLike(Boolean anonimo) {
         this.anonimoLike = anonimo;
+    }
+
+    public void setIdUser(Long idUser) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'setIdUser'");
     }
 
 

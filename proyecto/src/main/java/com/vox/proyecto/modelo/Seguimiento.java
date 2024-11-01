@@ -28,9 +28,13 @@ public class Seguimiento {
     @ManyToOne
     private Usuario seguido;
 
-    public Seguimiento(Long idSeguido, Long idSeguidor) {
+    public Seguimiento(Long idUsuario, Long long1) {
         this.idSeguido = idSeguido;
         this.idSeguidor = idSeguidor;
+    }
+
+    public Seguimiento() {
+        //TODO Auto-generated constructor stub
     }
 
     public void eliminarSeguimiento() {
