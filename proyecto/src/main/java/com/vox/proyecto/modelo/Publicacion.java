@@ -3,17 +3,15 @@ package com.vox.proyecto.modelo;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import lombok.Data;
 
 @Entity
 @Data
-
 public class Publicacion {
 
     @Id
@@ -30,7 +28,7 @@ public class Publicacion {
     @OneToMany(mappedBy = "publicacion")
     private List<Like> likes = new ArrayList<>();
 
-    // Constructor con parámetros
+    // Constructor con parámetros para crear una publicación completa
     public Publicacion(Usuario autor, String descripcion, Boolean anonimo) {
         this.autor = autor;
         this.descripcion = descripcion;
@@ -38,18 +36,16 @@ public class Publicacion {
         this.anonimo = anonimo;
     }
 
-    public Publicacion(long l, String descripcion2, boolean anonimo2) {
-        //TODO Auto-generated constructor stub
+    // Constructor vacío requerido para JPA
+    public Publicacion() {
     }
 
-    public Publicacion(long l, Long idUsuario, String string, boolean b) {
-        //TODO Auto-generated constructor stub
-    }
-
+    // Método para cambiar el anonimato de la publicación
     public void cambiarAnonimato(Boolean anonimo) {
         this.anonimo = anonimo;
     }
 
+    // Método para agregar un like a la publicación
     public void agregarLike(Like nuevoLike) {
         this.likes.add(nuevoLike);
     }
@@ -64,7 +60,7 @@ public class Publicacion {
         return this.autor.getIdUsuario().equals(idUsuario);
     }
 
-    // Método para contar likes
+    // Método para contar la cantidad de likes en la publicación
     public long contarLikes() {
         return likes.size();
     }

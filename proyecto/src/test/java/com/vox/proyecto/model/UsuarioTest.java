@@ -1,13 +1,11 @@
 package com.vox.proyecto.model;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
 import com.vox.proyecto.modelo.Publicacion;
 import com.vox.proyecto.modelo.Seguimiento;
 import com.vox.proyecto.modelo.Usuario;
-
 import static org.junit.jupiter.api.Assertions.*;
-
 import java.util.List;
 
 public class UsuarioTest {
@@ -15,22 +13,16 @@ public class UsuarioTest {
     private Usuario usuario2;
     private Publicacion publicacion1;
     private Publicacion publicacion2;
-    @SuppressWarnings("unused")
-    private Publicacion publicacion3;
-    @SuppressWarnings("unused")
-    private Publicacion publicacion4;
 
-    /* Antes de cada prueba se inicializan los usuarios y las publicaciones */
+    // Inicialización de usuarios y publicaciones antes de cada prueba
     @BeforeEach
     public void setUp() {
         usuario1 = new Usuario("Katheryn", "kathe123", "contraseña", 18, "Ingeniería de Sistemas", "4to", "Monogamía, Dios y Patria", "KatherynGuasca@javeriana.edu.co");
         usuario2 = new Usuario("Ardi", "ardi123", "contraseña", 119, "Ingeniería de Bucaramanga", "4to", "Viva el atlético Bucaramanga", "JuanArdi@javeriana.edu.co");
 
-        /* Publicaciones inicializadas con diferentes usuarios y configuraciones */
-        publicacion1 = new Publicacion(1L, "Quiero saber el nombre de este chico", true);
-        publicacion2 = new Publicacion(2L, "Les quiero contar una historia...", false);
-        publicacion3 = new Publicacion(3L, "Christian es un falso", false);
-        publicacion4 = new Publicacion(4L, "Extraño cuando era feliz", false);
+        // Publicaciones con autores y configuraciones iniciales
+        publicacion1 = new Publicacion(usuario1, "Quiero saber el nombre de este chico", true);
+        publicacion2 = new Publicacion(usuario2, "Les quiero contar una historia...", false);
     }
 
     @Test
@@ -40,11 +32,6 @@ public class UsuarioTest {
 
         assertEquals(1, seguidos.size(), "El usuario debería tener 1 seguido");
         assertEquals(usuario2.getIdUsuario(), seguidos.get(0).getIdSeguido(), "El ID del usuario seguido debe coincidir");
-
-        System.out.println("Seguidores de usuario2:");
-        usuario2.getSeguidores().forEach(seguimiento -> {
-            System.out.println("Seguidor ID: " + seguimiento.getIdSeguidor());
-        });
     }
 
     @Test
