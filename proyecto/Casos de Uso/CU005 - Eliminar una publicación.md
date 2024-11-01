@@ -1,4 +1,4 @@
-# Eliminar publicación
+# 5. Eliminar publicación
 
 ## Flujo principal:
 1. El usuario va a su perfil y selecciona la publicación que desea eliminar.

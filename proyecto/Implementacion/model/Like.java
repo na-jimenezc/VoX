@@ -30,7 +30,7 @@ public class Like {
         this.anonimoLike = anonimo;
     }
 
-    //Método para eliminar el like
+    //Método para eliminar el like 
     public void eliminarLike() {
         if (publicacion != null) {
             publicacion.getLikes().remove(this);

@@ -22,7 +22,7 @@ public class Usuario {
     String biografia;
     String email;
 
-    //Relaciones de agregacion y composicion 
+    //Relaciones de agregacion y composicion  SA
     List<Like> likes = new ArrayList<>(); 
     List<Publicacion> publicaciones = new ArrayList<>(); 
     List<Seguimiento> seguidores = new ArrayList<>();  

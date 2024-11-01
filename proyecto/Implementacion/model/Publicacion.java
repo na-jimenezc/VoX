@@ -19,7 +19,7 @@ public class Like {
     @ManyToOne
     private Publicacion publicacion;
 
-    /*Constructor básico del like*/
+    /*Constructor básico del like*/ SA
     public Like(Long idLike, Boolean anonimo) {
         this.idLike = idLike;
         this.anonimoLike = anonimo;

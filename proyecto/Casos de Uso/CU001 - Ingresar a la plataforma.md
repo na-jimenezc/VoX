@@ -1,4 +1,4 @@
-# Ingresar a la plataforma
+# 1. Ingresar a la plataforma
 
 ## Flujo principal:
     1. El usuario abre la aplicación.
