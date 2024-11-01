@@ -89,7 +89,7 @@ public class ControllerPublicacionesTest {
     @Test
     public void testVerificarPertenenciaPub() throws Exception {
         // Crea y guarda una publicación con un autor específico
-        Publicacion publicacion = new Publicacion(1L, "Descripcion prueba", true);
+        Publicacion publicacion = new Publicacion(null, "Descripcion prueba", true);
         publicacionRepository.save(publicacion);
 
         mockMvc.perform(get("/publicaciones/verificarPertenencia")

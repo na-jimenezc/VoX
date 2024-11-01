@@ -40,6 +40,7 @@ public class Publicacion {
     public Publicacion() {
     }
 
+
     // Método para cambiar el anonimato de la publicación
     public void cambiarAnonimato(Boolean anonimo) {
         this.anonimo = anonimo;

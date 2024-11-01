@@ -1,7 +1,6 @@
 package com.vox.proyecto.repository;
 
 import com.vox.proyecto.modelo.Publicacion;
-import com.vox.proyecto.repository.PublicacionRepository;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
