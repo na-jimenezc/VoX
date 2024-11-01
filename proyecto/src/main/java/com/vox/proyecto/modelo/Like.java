@@ -4,11 +4,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import lombok.Data;
 
 @Entity
-@Data
-
 public class Like {
 
     @Id
@@ -22,17 +19,21 @@ public class Like {
     @ManyToOne
     private Publicacion publicacion;
 
-    public Like(Usuario usuario2, Publicacion publicacion2, Boolean anonimo) {
+    // Constructor completo
+    public Like(Usuario usuario, Publicacion publicacion, Boolean anonimo) {
+        this.usuario = usuario;
         this.publicacion = publicacion;
         this.anonimoLike = anonimo;
         usuario.getLikes().add(this);
         publicacion.getLikes().add(this);
     }
 
+    // Constructor sin argumentos
     public Like() {
-        //TODO Auto-generated constructor stub
+        // Constructor vacío
     }
 
+    // Método para eliminar el like de una publicación
     public void eliminarLike() {
         if (publicacion != null) {
             publicacion.getLikes().remove(this);
@@ -40,14 +41,50 @@ public class Like {
         }
     }
 
+    // Método para cambiar el anonimato del like
     public void cambiarAnonimatoLike(Boolean anonimo) {
         this.anonimoLike = anonimo;
     }
 
+    // Getters y Setters
+    public Long getIdLike() {
+        return idLike;
+    }
+
+    public void setIdLike(Long idLike) {
+        this.idLike = idLike;
+    }
+
+    public Boolean getAnonimoLike() {
+        return anonimoLike;
+    }
+
+    public void setAnonimoLike(Boolean anonimoLike) {
+        this.anonimoLike = anonimoLike;
+    }
+
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
+    }
+
+    public Publicacion getPublicacion() {
+        return publicacion;
+    }
+
+    public void setPublicacion(Publicacion publicacion) {
+        this.publicacion = publicacion;
+    }
+
+    // Métodos no implementados (eliminados para evitar errores)
     public void setIdUser(Long idUser) {
-        // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'setIdUser'");
     }
 
-
+    public Long getIdUser() {
+        throw new UnsupportedOperationException("Unimplemented method 'getIdUser'");
+    }
 }

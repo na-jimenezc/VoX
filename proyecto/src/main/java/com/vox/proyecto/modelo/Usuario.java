@@ -6,13 +6,9 @@ import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-
-import jakarta.persistence.OneToMany;
-import lombok.Data;
+import javax.persistence.OneToMany;
 
 @Entity
-@Data
-
 public class Usuario {
 
     @Id
@@ -34,12 +30,19 @@ public class Usuario {
     @OneToMany(mappedBy = "usuario")
     private List<Like> likes = new ArrayList<>();
 
-
+    @OneToMany
     private List<Seguimiento> seguidores = new ArrayList<>();
+
+    @OneToMany
     private List<Seguimiento> seguidos = new ArrayList<>();
 
-                // Constructor adicional para registrar usuario
-        public Usuario() {
+    // Constructor vacío
+    public Usuario() {
+    }
+
+    // Constructor completo para inicializar todos los atributos
+    public Usuario(String nombre, String username, String password, int edad, String carrera, String semestre,
+                   String biografia, String email) {
         this.nombre = nombre;
         this.username = username;
         this.password = password;
@@ -48,18 +51,9 @@ public class Usuario {
         this.semestre = semestre;
         this.biografia = biografia;
         this.email = email;
-        }
-
-    public Usuario(String nombre2, String username2, String password2, int edad2, String carrera2, String semestre2,
-                String biografia2, String email2) {
-            //TODO Auto-generated constructor stub
-        }
-
-    public Usuario(long l, String string, String string2, String string3, int i, String string4, String string5,
-            String string6, String string7) {
-        //TODO Auto-generated constructor stub
     }
 
+    // Métodos para gestionar seguidores y seguidos
     public void seguir(Usuario usuario) {
         Seguimiento seguimiento = new Seguimiento(this.idUsuario, usuario.getIdUsuario());
         this.seguidos.add(seguimiento);
@@ -93,6 +87,7 @@ public class Usuario {
                 .orElse(null);
     }
 
+    // Métodos para gestionar likes y publicaciones
     public void darLike(Publicacion publicacion, Boolean anonimo) {
         Like nuevoLike = new Like(this, publicacion, anonimo);
         this.likes.add(nuevoLike);
@@ -126,8 +121,113 @@ public class Usuario {
         }
     }
 
+    // Métodos get/set para cada atributo
+    public Long getIdUsuario() {
+        return idUsuario;
+    }
+
+    public void setIdUsuario(Long idUsuario) {
+        this.idUsuario = idUsuario;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public int getEdad() {
+        return edad;
+    }
+
+    public void setEdad(int edad) {
+        this.edad = edad;
+    }
+
+    public String getCarrera() {
+        return carrera;
+    }
+
+    public void setCarrera(String carrera) {
+        this.carrera = carrera;
+    }
+
+    public String getSemestre() {
+        return semestre;
+    }
+
+    public void setSemestre(String semestre) {
+        this.semestre = semestre;
+    }
+
+    public String getBiografia() {
+        return biografia;
+    }
+
+    public void setBiografia(String biografia) {
+        this.biografia = biografia;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public List<Publicacion> getPublicaciones() {
+        return publicaciones;
+    }
+
+    public void setPublicaciones(List<Publicacion> publicaciones) {
+        this.publicaciones = publicaciones;
+    }
+
+    public List<Like> getLikes() {
+        return likes;
+    }
+
+    public void setLikes(List<Like> likes) {
+        this.likes = likes;
+    }
+
+    public List<Seguimiento> getSeguidores() {
+        return seguidores;
+    }
+
+    public void setSeguidores(List<Seguimiento> seguidores) {
+        this.seguidores = seguidores;
+    }
+
+    public List<Seguimiento> getSeguidos() {
+        return seguidos;
+    }
+
+    public void setSeguidos(List<Seguimiento> seguidos) {
+        this.seguidos = seguidos;
+    }
+
+    // Método pendiente
     public boolean eliminarPublicacion(Publicacion pubAEliminar) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'eliminarPublicacion'");
+        return this.publicaciones.remove(pubAEliminar);
     }
 }
