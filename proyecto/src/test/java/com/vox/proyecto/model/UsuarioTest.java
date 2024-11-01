@@ -2,6 +2,7 @@
     import org.junit.jupiter.api.Test;
 
 import com.vox.proyecto.modelo.Publicacion;
+import com.vox.proyecto.modelo.Seguimiento;
 import com.vox.proyecto.modelo.Usuario;
 
 import static org.junit.jupiter.api.Assertions.*;

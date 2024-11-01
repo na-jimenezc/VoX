@@ -55,6 +55,11 @@ public class Usuario {
             //TODO Auto-generated constructor stub
         }
 
+    public Usuario(long l, String string, String string2, String string3, int i, String string4, String string5,
+            String string6, String string7) {
+        //TODO Auto-generated constructor stub
+    }
+
     public void seguir(Usuario usuario) {
         Seguimiento seguimiento = new Seguimiento(this.idUsuario, usuario.getIdUsuario());
         this.seguidos.add(seguimiento);
@@ -119,5 +124,10 @@ public class Usuario {
         if (this.username.equals(username)) {
             this.username = nuevoUsername;
         }
+    }
+
+    public boolean eliminarPublicacion(Publicacion pubAEliminar) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'eliminarPublicacion'");
     }
 }
