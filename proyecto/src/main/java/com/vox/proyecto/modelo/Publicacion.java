@@ -38,6 +38,10 @@ public class Publicacion {
         this.anonimo = anonimo;
     }
 
+    public Publicacion(long l, String descripcion2, boolean anonimo2) {
+        //TODO Auto-generated constructor stub
+    }
+
     public void cambiarAnonimato(Boolean anonimo) {
         this.anonimo = anonimo;
     }

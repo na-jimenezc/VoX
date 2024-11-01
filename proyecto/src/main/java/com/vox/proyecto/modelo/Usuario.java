@@ -39,7 +39,7 @@ public class Usuario {
     private List<Seguimiento> seguidos = new ArrayList<>();
 
                 // Constructor adicional para registrar usuario
-        public Usuario(String nombre, String username, String password, int edad, String carrera, String semestre, String biografia, String email) {
+        public Usuario() {
         this.nombre = nombre;
         this.username = username;
         this.password = password;
@@ -48,6 +48,11 @@ public class Usuario {
         this.semestre = semestre;
         this.biografia = biografia;
         this.email = email;
+        }
+
+    public Usuario(String nombre2, String username2, String password2, int edad2, String carrera2, String semestre2,
+                String biografia2, String email2) {
+            //TODO Auto-generated constructor stub
         }
 
     public void seguir(Usuario usuario) {
