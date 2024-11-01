@@ -2,7 +2,6 @@ package com.vox.proyecto.repository;
 
 import com.vox.proyecto.controller.ControllerUsuarios;
 import com.vox.proyecto.modelo.Usuario;
-import com.vox.proyecto.repository.UsuarioRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;

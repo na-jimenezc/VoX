@@ -2,8 +2,6 @@ package com.vox.proyecto.repository;
 
 import com.vox.proyecto.modelo.Like;
 import com.vox.proyecto.modelo.Publicacion;
-import com.vox.proyecto.repository.LikeRepository;
-import com.vox.proyecto.repository.PublicacionRepository;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

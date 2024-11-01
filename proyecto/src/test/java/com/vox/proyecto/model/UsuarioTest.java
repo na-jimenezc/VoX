@@ -1,3 +1,4 @@
+package com.vox.proyecto.model;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -14,7 +15,9 @@ public class UsuarioTest {
     private Usuario usuario2;
     private Publicacion publicacion1;
     private Publicacion publicacion2;
+    @SuppressWarnings("unused")
     private Publicacion publicacion3;
+    @SuppressWarnings("unused")
     private Publicacion publicacion4;
 
     /* Antes de cada prueba se inicializan los usuarios y las publicaciones */
@@ -100,7 +103,7 @@ public class UsuarioTest {
     @Test
     public void testEditarBiografia() {
         String nuevaBiografia = "Nueva biografía actualizada";
-        usuario1.editarBiografia(nuevaBiografia);
+        usuario1.setBiografia(nuevaBiografia);
 
         assertEquals(nuevaBiografia, usuario1.getBiografia(), "La biografía debe actualizarse correctamente");
     }
