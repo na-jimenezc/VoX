@@ -1,0 +1,11 @@
+# 4. Crear una publicación de solo texto (normal o anónima)
+
+## Flujo principal:
+    1. El usuario selecciona la opción "Crear publicación".
+    2. Escribe el texto de la publicación.
+    3. Elige "Publicar en modo normal".
+    4. El sistema muestra la publicación en el feed con la identidad del usuario.
+
+## Flujos alternos:
+    1. Si el usuario elige "Publicar en modo anónimo", el sistema oculta su identidad en el feed.
+    2. Si el usuario intenta publicar un texto vacío, el sistema muestra un mensaje de error.

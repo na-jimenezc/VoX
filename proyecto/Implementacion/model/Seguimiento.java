@@ -26,7 +26,7 @@ public class Seguimiento {
     private Long idSeguido;
     private Long idSeguidor;
 
-    // Relaciones de agregacion y composicion 
+    // Relaciones de agregacion y composicion  sa
     Usuario seguidor;
     Usuario seguido;
 

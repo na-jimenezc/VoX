@@ -1,0 +1,10 @@
+# 3. Dar like normal o anónimo a una publicación
+
+## Flujo principal:
+    1. El usuario navega por el feed y selecciona una publicación.
+    2. Toca el botón de "like".
+    3. El sistema registra el "like" en modo visible para el autor y otros usuarios (modo normal).
+
+## Flujos alternos:
+    1. Si el usuario elige dar un "like anónimo", el sistema registra el "like" sin mostrar su identidad.
+    2. Si el usuario intenta dar un "like" a una publicación que ya le ha dado "like", el sistema lo elimina (función de quitar "like").

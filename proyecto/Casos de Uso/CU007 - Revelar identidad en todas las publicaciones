@@ -1,0 +1,10 @@
+# 7. Eliminar anonimato en todas las publicaciones
+
+## Flujo principal:
+1. El usuario accede a la configuración de su perfil.
+2. Selecciona la opción "Eliminar anonimato en todas las publicaciones".
+3. El sistema muestra un mensaje de confirmación, informando que se revelará la identidad en todas las publicaciones anónimas realizadas.
+4. Al confirmar, el sistema actualiza cada publicación anónima del usuario, mostrando su identidad en cada una.
+
+## Flujos alternos:
+1. Si el usuario cancela en el mensaje de confirmación, las publicaciones permanecen en modo anónimo.
