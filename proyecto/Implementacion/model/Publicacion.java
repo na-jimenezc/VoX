@@ -1,54 +1,40 @@
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
-@Setter 
+@Setter
 @ToString
-public class Publicacion {
+public class Like {
 
     @Id
-    @GeneratedValue
-    private Long idPub;
+    private Long idLike; 
+    private Boolean anonimoLike;
 
-    private String descripcion;
-    private Date fecha;
-    private Boolean anonimo;
-
-    // Relaciones de agregacion y composicion 
     @ManyToOne
-    Usuario autor; 
+    private Publicacion publicacion;
 
-    @OneToMany(mappedBy = "publicacion")
-    List<Like> likes = new ArrayList<>();
-
-    // Constructor con parámetros para los atributos principales
-    public Publicacion(Long idAutor, String descripcion, Boolean anonimo) {
-        this.descripcion = descripcion;
-        this.fecha = new Date(); // Fecha de creación actual
-        this.anonimo = anonimo;
+    /*Constructor básico del like*/
+    public Like(Long idLike, Boolean anonimo) {
+        this.idLike = idLike;
+        this.anonimoLike = anonimo;
     }
 
-    // Método para cambiar el anonimato de una publicación
-    public void cambiarAnonimato(Boolean anonimo) {
-        this.anonimo = anonimo;
+    /*Método para eliminar el like*/
+    public void eliminarLike() {
+        if (publicacion != null) {
+            publicacion.getLikes().remove(this);
+            this.publicacion = null;
+        }
     }
 
-    // Método para agregar un like a la publicación
-    public void agregarLike(Like nuevoLike) {
-        this.likes.add(nuevoLike);
+    /*Método para cambiar el anonimato del like*/
+    public void cambiarAnonimatoLike(Boolean anonimo) {
+        this.anonimoLike = anonimo;
     }
 }

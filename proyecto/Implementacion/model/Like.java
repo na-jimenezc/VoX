@@ -20,22 +20,17 @@ public class Like {
     @Id
     @GeneratedValue
     private Long idLike;
-
-    private Long idUser;
-    private Long idPub;
     private Boolean anonimoLike;
 
     @ManyToOne
     private Publicacion publicacion;
 
-    // Constructor con parámetros para los atributos principales
-    public Like(Long idUser, Long idPub, Boolean anonimo) {
-        this.idUser = idUser;
-        this.idPub = idPub;
+    //Constructor con parámetros para los atributos principales
+    public Like(Boolean anonimo) {
         this.anonimoLike = anonimo;
     }
 
-    // Método para eliminar el like
+    //Método para eliminar el like
     public void eliminarLike() {
         if (publicacion != null) {
             publicacion.getLikes().remove(this);

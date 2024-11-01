@@ -1,0 +1,12 @@
+# Crear un nuevo usuario
+
+## Flujo principal:
+    1. El usuario selecciona "Crear nueva cuenta".
+    2. Completa los campos de nombre, correo electrónico, nombre de usuario y contraseña.
+    3. El sistema valida la información y envía un correo de verificación.
+    4. El usuario verifica el correo electrónico.
+    5. La cuenta es creada exitosamente, y el usuario puede iniciar sesión.
+    6. Flujos alternos:
+
+## Flujo Alterno
+    1. Si el nombre de usuario o correo ya están en uso, el sistema solicita al usuario elegir otros datos.

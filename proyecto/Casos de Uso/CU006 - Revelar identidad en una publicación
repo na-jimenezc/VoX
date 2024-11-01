@@ -1,0 +1,11 @@
+# Revelar identidad de una publicación realizada
+
+## Flujo principal:
+1. El usuario va a su perfil y selecciona una publicación realizada en modo anónimo.
+2. Selecciona la opción "Revelar identidad".
+3. El sistema muestra un mensaje de confirmación.
+4. Al confirmar, la identidad del usuario queda visible en la publicación.
+
+## Flujos alternos:
+1. Si el usuario cancela en el mensaje de confirmación, la identidad permanece oculta.
+2. Si la publicación no permite cambios de anonimato (ej. límite de tiempo), el sistema muestra un mensaje de error.
