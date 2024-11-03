@@ -34,34 +34,36 @@ public class UsuarioTest {
         assertEquals(usuario2.getIdUsuario(), seguidos.get(0).getIdSeguido(), "El ID del usuario seguido debe coincidir");
     }
     
-
     @Test
     public void testDejarDeSeguirUsuario() {
-        // Asegúrate de que los usuarios están correctamente inicializados
-        usuario1.seguir(usuario2);
-        assertFalse(usuario1.getSeguidos().isEmpty(), "El usuario1 debe seguir a usuario2 antes de dejar de seguirlo");
+        usuario1.seguir(usuario2); // usuario1 sigue a usuario2
+        assertFalse(usuario1.getSeguidos().isEmpty(), "El usuario1 debería estar siguiendo a usuario2.");
     
-        // Llama al método para dejar de seguir
-        usuario1.dejarSeguir(usuario2);
+        // Verificar que usuario2 tenga a usuario1 en sus seguidores
+        assertTrue(usuario2.getSeguidores().stream()
+                           .anyMatch(seg -> seg.getSeguidor().equals(usuario1)), 
+                   "usuario2 debería tener a usuario1 como seguidor.");
     
-        // Verificamos que usuario1 no sigue a usuario2
-        assertTrue(usuario1.getSeguidos().isEmpty(), "El usuario1 ya no debe seguir a usuario2");
+        usuario1.dejarSeguir(usuario2); // usuario1 deja de seguir a usuario2
     
-        // Verificamos que usuario2 no tiene a usuario1 como seguidor
-        boolean esSeguidor = usuario2.getSeguidores().stream()
-                                      .anyMatch(seg -> seg.getIdSeguidor().equals(usuario1.getIdUsuario()));
-        assertFalse(esSeguidor, "usuario2 no debe tener a usuario1 como seguidor");
+        // Verificar que usuario1 ya no sigue a usuario2
+        assertTrue(usuario1.getSeguidos().isEmpty(), "El usuario1 ya no debería seguir a nadie.");
+    
+        // Verificar que usuario2 ya no tiene a usuario1 como seguidor
+        boolean esSeguidor = usuario2.getSeguidores().stream().anyMatch(seg -> seg.getSeguidor().equals(usuario1);
+        assertFalse(esSeguidor, "usuario2 no debería tener a usuario1 como seguidor.");
     }
     
-
-
     @Test
-    public void testDarLikeAnonimo() {
-        usuario1.darLike(publicacion1, true);
-        assertEquals(1, publicacion1.getLikes().size(), "La publicación debe tener 1 like");
-        assertTrue(publicacion1.getLikes().get(0).getAnonimoLike(), "El like debe ser anónimo");
-        assertEquals(usuario1.getIdUsuario(), publicacion1.getLikes().get(0).getUsuario().getIdUsuario(), "El like debe pertenecer a usuario1");
-    }
+public void testDarLikeAnonimo() {
+    usuario1.darLike(publicacion1, true);
+    System.out.println(publicacion1.getLikes()); // Verifica el contenido de likes
+    assertEquals(1, publicacion1.getLikes().size());
+    assertTrue(publicacion1.getLikes().get(0).getAnonimoLike());
+    assertNotNull(publicacion1.getLikes().get(0).getUsuario());
+    assertEquals(usuario1.getIdUsuario(), publicacion1.getLikes().get(0).getUsuario().getIdUsuario());
+}
+
 
     @Test
 public void testDarLikePublico() {

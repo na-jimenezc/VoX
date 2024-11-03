@@ -77,14 +77,14 @@ public class Usuario {
     */
 
     public void dejarSeguir(Usuario usuario) {
-        if (usuario != null && usuario.getIdUsuario() != null) { // Verificamos que usuario no sea nulo y su ID sea válido
-            // Eliminamos el seguimiento de la lista de seguidos
-            seguidos.removeIf(s -> s.getSeguido() != null && s.getSeguido().getIdUsuario() != null && s.getSeguido().getIdUsuario().equals(usuario.getIdUsuario()));
-            
-            // Eliminamos el seguimiento de la lista de seguidores del usuario seguido
-            usuario.getSeguidores().removeIf(s -> s.getSeguidor() != null && s.getSeguidor().getIdUsuario() != null && s.getSeguidor().getIdUsuario().equals(this.getIdUsuario()));
-        }
+    if (usuario != null && usuario.getIdUsuario() != null) {
+        // Eliminamos el seguimiento de la lista de seguidos
+        seguidos.removeIf(s -> s.getSeguido() != null && s.getSeguido().getIdUsuario() != null && s.getSeguido().getIdUsuario().equals(usuario.getIdUsuario()));
+        
+        // Eliminamos el seguimiento de la lista de seguidores del usuario seguido
+        usuario.getSeguidores().removeIf(s -> s.getSeguidor() != null && s.getSeguidor().getIdUsuario() != null && s.getSeguidor().getIdUsuario().equals(this.getIdUsuario()));
     }
+}
     
 
     public List<Usuario> verSeguidores() {
@@ -117,12 +117,15 @@ public class Usuario {
     }*/
 
     public void darLike(Publicacion publicacion, Boolean anonimo) {
-        if (this.likes.stream().noneMatch(l -> l.getPublicacion().equals(publicacion))) { // Prevenir likes duplicados
-            Like nuevoLike = new Like(this, publicacion, anonimo);
-            this.likes.add(nuevoLike);
-            publicacion.getLikes().add(nuevoLike);
-        }
+        // Remueve cualquier "like" existente en esta publicación por el mismo usuario
+        publicacion.getLikes().removeIf(l -> l.getUsuario().equals(this));
+    
+        // Crea y agrega un nuevo "like"
+        Like nuevoLike = new Like(this, publicacion, anonimo);
+        this.likes.add(nuevoLike);
+        publicacion.getLikes().add(nuevoLike);
     }
+    
 
     public void quitarLike(Publicacion publicacion) {
         publicacion.getLikes().removeIf(l -> l.getUsuario().equals(this));
