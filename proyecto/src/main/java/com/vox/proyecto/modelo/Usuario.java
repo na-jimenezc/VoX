@@ -54,16 +54,38 @@ public class Usuario {
     }
 
     // Métodos para gestionar seguidores y seguidos
+    /*
     public void seguir(Usuario usuario) {
         Seguimiento seguimiento = new Seguimiento(this.idUsuario, usuario.getIdUsuario());
         this.seguidos.add(seguimiento);
         usuario.getSeguidores().add(seguimiento);
     }
+        */
 
+        public void seguir(Usuario usuario) {
+            if (!this.equals(usuario)) { // Prevenir que un usuario se siga a sí mismo
+                Seguimiento seguimiento = new Seguimiento(this, usuario); // Cambiar aquí
+                this.seguidos.add(seguimiento);
+                usuario.getSeguidores().add(seguimiento);
+            }
+        } 
+/*
     public void dejarSeguir(Usuario usuario) {
         this.seguidos.removeIf(s -> s.getIdSeguido().equals(usuario.getIdUsuario()));
         usuario.getSeguidores().removeIf(s -> s.getIdSeguidor().equals(this.idUsuario));
     }
+    */
+
+    public void dejarSeguir(Usuario usuario) {
+        if (usuario != null && usuario.getIdUsuario() != null) { // Verificamos que usuario no sea nulo y su ID sea válido
+            // Eliminamos el seguimiento de la lista de seguidos
+            seguidos.removeIf(s -> s.getSeguido() != null && s.getSeguido().getIdUsuario() != null && s.getSeguido().getIdUsuario().equals(usuario.getIdUsuario()));
+            
+            // Eliminamos el seguimiento de la lista de seguidores del usuario seguido
+            usuario.getSeguidores().removeIf(s -> s.getSeguidor() != null && s.getSeguidor().getIdUsuario() != null && s.getSeguidor().getIdUsuario().equals(this.getIdUsuario()));
+        }
+    }
+    
 
     public List<Usuario> verSeguidores() {
         List<Usuario> listaSeguidores = new ArrayList<>();
@@ -88,10 +110,18 @@ public class Usuario {
     }
 
     // Métodos para gestionar likes y publicaciones
-    public void darLike(Publicacion publicacion, Boolean anonimo) {
+/*    public void darLike(Publicacion publicacion, Boolean anonimo) {
         Like nuevoLike = new Like(this, publicacion, anonimo);
         this.likes.add(nuevoLike);
         publicacion.getLikes().add(nuevoLike);
+    }*/
+
+    public void darLike(Publicacion publicacion, Boolean anonimo) {
+        if (this.likes.stream().noneMatch(l -> l.getPublicacion().equals(publicacion))) { // Prevenir likes duplicados
+            Like nuevoLike = new Like(this, publicacion, anonimo);
+            this.likes.add(nuevoLike);
+            publicacion.getLikes().add(nuevoLike);
+        }
     }
 
     public void quitarLike(Publicacion publicacion) {

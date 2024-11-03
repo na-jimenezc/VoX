@@ -33,36 +33,51 @@ public class UsuarioTest {
         assertEquals(1, seguidos.size(), "El usuario debería tener 1 seguido");
         assertEquals(usuario2.getIdUsuario(), seguidos.get(0).getIdSeguido(), "El ID del usuario seguido debe coincidir");
     }
+    
 
     @Test
     public void testDejarDeSeguirUsuario() {
+        // Asegúrate de que los usuarios están correctamente inicializados
         usuario1.seguir(usuario2);
+        assertFalse(usuario1.getSeguidos().isEmpty(), "El usuario1 debe seguir a usuario2 antes de dejar de seguirlo");
+    
+        // Llama al método para dejar de seguir
         usuario1.dejarSeguir(usuario2);
-
-        assertTrue(usuario1.getSeguidos().isEmpty(), "El usuario ya no debe seguir a usuario2");
-        assertTrue(usuario2.getSeguidores().isEmpty(), "usuario2 ya no debe tener seguidores");
+    
+        // Verificamos que usuario1 no sigue a usuario2
+        assertTrue(usuario1.getSeguidos().isEmpty(), "El usuario1 ya no debe seguir a usuario2");
+    
+        // Verificamos que usuario2 no tiene a usuario1 como seguidor
+        boolean esSeguidor = usuario2.getSeguidores().stream()
+                                      .anyMatch(seg -> seg.getIdSeguidor().equals(usuario1.getIdUsuario()));
+        assertFalse(esSeguidor, "usuario2 no debe tener a usuario1 como seguidor");
     }
+    
+
 
     @Test
     public void testDarLikeAnonimo() {
         usuario1.darLike(publicacion1, true);
         assertEquals(1, publicacion1.getLikes().size(), "La publicación debe tener 1 like");
         assertTrue(publicacion1.getLikes().get(0).getAnonimoLike(), "El like debe ser anónimo");
+        assertEquals(usuario1.getIdUsuario(), publicacion1.getLikes().get(0).getUsuario().getIdUsuario(), "El like debe pertenecer a usuario1");
     }
 
     @Test
-    public void testDarLikePublico() {
-        usuario1.darLike(publicacion2, false);
-        assertEquals(1, publicacion2.getLikes().size(), "La publicación debe tener 1 like");
-        assertFalse(publicacion2.getLikes().get(0).getAnonimoLike(), "El like debe ser público");
-    }
+public void testDarLikePublico() {
+    usuario1.darLike(publicacion2, false); // usuario1 da un like público a publicacion2
+    assertEquals(1, publicacion2.getLikes().size(), "La publicación debe tener 1 like"); // Verifica que haya un like
+    assertFalse(publicacion2.getLikes().get(0).getAnonimoLike(), "El like debe ser público"); // Verifica que no sea anónimo
+    assertEquals(usuario1.getIdUsuario(), publicacion2.getLikes().get(0).getUsuario().getIdUsuario(), "El like debe pertenecer a usuario1"); // Verifica que el like pertenezca a usuario1
+}
 
     @Test
     public void testQuitarLike() {
-        usuario1.darLike(publicacion1, true);
-        usuario1.quitarLike(publicacion1);
+        usuario1.darLike(publicacion1, true); // usuario1 da un like anónimo a publicacion1
+        usuario1.quitarLike(publicacion1); // usuario1 quita el like a publicacion1
         assertTrue(publicacion1.getLikes().isEmpty(), "La publicación no debe tener likes después de quitarlos");
     }
+    
 
     @Test
     public void testHacerPublicacionAnonima() {

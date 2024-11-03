@@ -26,9 +26,16 @@ public class Seguimiento {
     private Usuario seguido;
 
     // Constructor que recibe los IDs correcto
-    public Seguimiento(Long idSeguidor, Long idSeguido) {
+    /*public Seguimiento(Long idSeguidor, Long idSeguido) {
         this.idSeguido = idSeguido;
         this.idSeguidor = idSeguidor;
+    }*/
+
+    public Seguimiento(Usuario seguidor, Usuario seguido) {
+        this.seguidor = seguidor;
+        this.seguido = seguido;
+        this.idSeguidor = seguidor != null ? seguidor.getIdUsuario() : null;
+        this.idSeguido = seguido != null ? seguido.getIdUsuario() : null;
     }
 
     public Seguimiento() {
