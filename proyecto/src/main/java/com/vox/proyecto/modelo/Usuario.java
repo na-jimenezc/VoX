@@ -53,6 +53,29 @@ public class Usuario {
         this.email = email;
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        // Verifica si son el mismo objeto
+        if (this == obj) {
+            return true;
+        }
+        // Verifica si el objeto es nulo o no es de la misma clase
+        if (obj == null || getClass() != obj.getClass()) {
+            return false;
+        }
+        // Realiza la conversión
+        Usuario other = (Usuario) obj;
+        // Compara los atributos que identifican de manera única al usuario
+        return idUsuario != null && idUsuario.equals(other.idUsuario);
+    }
+
+    @Override
+    public int hashCode() {
+        // Genera un hash basado en el idUsuario
+        return idUsuario != null ? idUsuario.hashCode() : 0;
+    }
+
+
     // Métodos para gestionar seguidores y seguidos
     /*
     public void seguir(Usuario usuario) {

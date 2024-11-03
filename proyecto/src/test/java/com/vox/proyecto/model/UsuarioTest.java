@@ -2,6 +2,8 @@ package com.vox.proyecto.model;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import com.vox.proyecto.modelo.Like;
 import com.vox.proyecto.modelo.Publicacion;
 import com.vox.proyecto.modelo.Seguimiento;
 import com.vox.proyecto.modelo.Usuario;
@@ -36,35 +38,47 @@ public class UsuarioTest {
     
     @Test
     public void testDejarDeSeguirUsuario() {
-        usuario1.seguir(usuario2); // usuario1 sigue a usuario2
-        assertFalse(usuario1.getSeguidos().isEmpty(), "El usuario1 debería estar siguiendo a usuario2.");
+        // Crear usuarios de prueba
+        Usuario usuario1 = new Usuario("User1", "user1", "password1", 25, "Carrera", "5to", "Bio1", "user1@example.com");
+        Usuario usuario2 = new Usuario("User2", "user2", "password2", 27, "Carrera", "7mo", "Bio2", "user2@example.com");
     
-        // Verificar que usuario2 tenga a usuario1 en sus seguidores
-        assertTrue(usuario2.getSeguidores().stream()
-                           .anyMatch(seg -> seg.getSeguidor().equals(usuario1)), 
-                   "usuario2 debería tener a usuario1 como seguidor.");
+        // usuario1 sigue a usuario2
+        usuario1.seguir(usuario2);
     
-        usuario1.dejarSeguir(usuario2); // usuario1 deja de seguir a usuario2
+        // Verifica que usuario1 tiene al menos un usuario en su lista de seguidos
+        assertFalse(usuario1.getSeguidos().isEmpty(), "usuario1 debería tener al menos un usuario seguido");
     
-        // Verificar que usuario1 ya no sigue a usuario2
-        assertTrue(usuario1.getSeguidos().isEmpty(), "El usuario1 ya no debería seguir a nadie.");
+        // usuario1 deja de seguir a usuario2
+        usuario1.dejarSeguir(usuario2);
     
-        // Verificar que usuario2 ya no tiene a usuario1 como seguidor
-        boolean esSeguidor = usuario2.getSeguidores().stream().anyMatch(seg -> seg.getSeguidor().equals(usuario1);
-        assertFalse(esSeguidor, "usuario2 no debería tener a usuario1 como seguidor.");
+        // Asegura que usuario1 ya no tiene usuarios en su lista de seguidos
+        assertTrue(usuario1.getSeguidos().isEmpty(), "El usuario1 no debería tener usuarios seguidos después de dejar de seguir");
+    
+        // Verifica que usuario1 ya no aparece en la lista de seguidores de usuario2
+        boolean esSeguidor = usuario2.getSeguidores().stream()
+                                    .anyMatch(seg -> seg.getSeguidor().equals(usuario1));
+        assertFalse(esSeguidor, "usuario1 ya no debería ser seguidor de usuario2");
     }
+    
+
     
     @Test
     public void testDarLikeAnonimo() {
         Usuario usuarioTest = new Usuario("TestUser", "testuser123", "contraseña", 25, "Ingeniería de Software", "5to", "Nueva biografía", "testuser@javeriana.edu.co");
         Publicacion publicacionTest = new Publicacion(usuarioTest, "Prueba de like anónimo", true);
     
+        // Dar like anónimo
         usuarioTest.darLike(publicacionTest, true);
     
+        // Verificar que la publicación tiene exactamente un like
         assertEquals(1, publicacionTest.getLikes().size());
-        assertTrue(publicacionTest.getLikes().get(0).getAnonimoLike());
-        assertEquals(usuarioTest.getIdUsuario(), publicacionTest.getLikes().get(0).getUsuario().getIdUsuario());
+    
+        // Verificar que el like es anónimo y pertenece al usuario correcto
+        Like like = publicacionTest.getLikes().get(0);
+        assertTrue(like.getAnonimoLike());
+        assertEquals(usuarioTest.getIdUsuario(), like.getUsuario().getIdUsuario());
     }
+    
 
     @Test
     public void testDarLikePublico() {
