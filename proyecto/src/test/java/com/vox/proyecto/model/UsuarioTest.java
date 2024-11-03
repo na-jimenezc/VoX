@@ -55,23 +55,24 @@ public class UsuarioTest {
     }
     
     @Test
-public void testDarLikeAnonimo() {
-    usuario1.darLike(publicacion1, true);
-    System.out.println(publicacion1.getLikes()); // Verifica el contenido de likes
-    assertEquals(1, publicacion1.getLikes().size());
-    assertTrue(publicacion1.getLikes().get(0).getAnonimoLike());
-    assertNotNull(publicacion1.getLikes().get(0).getUsuario());
-    assertEquals(usuario1.getIdUsuario(), publicacion1.getLikes().get(0).getUsuario().getIdUsuario());
-}
-
+    public void testDarLikeAnonimo() {
+        Usuario usuarioTest = new Usuario("TestUser", "testuser123", "contraseña", 25, "Ingeniería de Software", "5to", "Nueva biografía", "testuser@javeriana.edu.co");
+        Publicacion publicacionTest = new Publicacion(usuarioTest, "Prueba de like anónimo", true);
+    
+        usuarioTest.darLike(publicacionTest, true);
+    
+        assertEquals(1, publicacionTest.getLikes().size());
+        assertTrue(publicacionTest.getLikes().get(0).getAnonimoLike());
+        assertEquals(usuarioTest.getIdUsuario(), publicacionTest.getLikes().get(0).getUsuario().getIdUsuario());
+    }
 
     @Test
-public void testDarLikePublico() {
-    usuario1.darLike(publicacion2, false); // usuario1 da un like público a publicacion2
-    assertEquals(1, publicacion2.getLikes().size(), "La publicación debe tener 1 like"); // Verifica que haya un like
-    assertFalse(publicacion2.getLikes().get(0).getAnonimoLike(), "El like debe ser público"); // Verifica que no sea anónimo
-    assertEquals(usuario1.getIdUsuario(), publicacion2.getLikes().get(0).getUsuario().getIdUsuario(), "El like debe pertenecer a usuario1"); // Verifica que el like pertenezca a usuario1
-}
+    public void testDarLikePublico() {
+        usuario1.darLike(publicacion2, false); // usuario1 da un like público a publicacion2
+        assertEquals(1, publicacion2.getLikes().size(), "La publicación debe tener 1 like"); // Verifica que haya un like
+        assertFalse(publicacion2.getLikes().get(0).getAnonimoLike(), "El like debe ser público"); // Verifica que no sea anónimo
+        assertEquals(usuario1.getIdUsuario(), publicacion2.getLikes().get(0).getUsuario().getIdUsuario(), "El like debe pertenecer a usuario1"); // Verifica que el like pertenezca a usuario1
+    }
 
     @Test
     public void testQuitarLike() {
