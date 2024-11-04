@@ -1,3 +1,5 @@
+package com.vox.proyecto.modelo;
+
 import java.util.Date;
 import java.util.List;
 import jakarta.persistence.Entity;
@@ -17,7 +19,7 @@ public class Multimedia {
 
     private String url;
     private String tipo;
-    private long int orden;
+    private long orden;
 
     @ManyToOne
     private Publicacion idPub;
