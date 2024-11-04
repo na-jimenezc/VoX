@@ -56,9 +56,17 @@ public class Publicacion {
     }
 
 
-    public Publicacion(Object object, String descripcion2, Boolean anonimo2) {
-        //TODO Auto-generated constructor stub
+    public Publicacion(Usuario autor, String descripcion, Boolean anonimo) {
+        this.autor = autor;
+        this.descripcion = descripcion;
+        this.fecha = new Date(); 
+        this.anonimo = anonimo;
+        // Inicializa la lista de likes, lista de comentarios y lista de Multimedia
+        this.likes = new ArrayList<>(); 
+        this.comentarios = new ArrayList<>(); 
+        this.multimedia = new ArrayList<>(); 
     }
+    
 
 
     // Método para cambiar el anonimato de la publicación

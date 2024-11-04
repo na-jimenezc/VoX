@@ -1,11 +1,11 @@
 package com.vox.proyecto.modelo;
-import java.util.Date;
-import java.util.List;
+//import java.util.Date;
+//import java.util.List;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
+//import jakarta.persistence.OneToMany;
 import lombok.Data;
 
 @Entity
@@ -30,7 +30,7 @@ public class Referencia {
     public Referencia(Boolean anonimoRef, String username, Publicacion idPub) {
         this.anonimoRef = anonimoRef;
         this.username = username;
-        this.idPub = idPub;
+        this.publicacion = idPub;
     }
     /*Getters*/
     public Long getIdRef() {
@@ -46,7 +46,7 @@ public class Referencia {
     }
 
     public Publicacion getIdPub() {
-        return idPub;
+        return publicacion;
     }
 
     /*Setters*/
@@ -63,11 +63,11 @@ public class Referencia {
     }
 
     public void setIdPub(Publicacion idPub) {
-        this.idPub = idPub;
+        this.publicacion = idPub;
     }
 
     public void actualizarReferencia(boolean anonimo){
-        this.anonimoRef = anonimo,
+        this.anonimoRef = anonimo;
     }
     
 }
