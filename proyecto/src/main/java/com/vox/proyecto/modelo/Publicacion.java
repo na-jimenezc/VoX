@@ -25,16 +25,31 @@ public class Publicacion {
     @ManyToOne
     private Usuario autor;
 
+    //ATRIBUTO PAARA REVISAR COMENTARIOS
+    @ManyToOne
+    private Publicacion publicacionPadre;
+
     @OneToMany(mappedBy = "publicacion")
     private List<Like> likes = new ArrayList<>();
 
-    // Constructor con parámetros para crear una publicación completa
-    public Publicacion(Usuario autor, String descripcion, Boolean anonimo) {
-        this.autor = autor;
+    //MAPEADO JPA PARA LOS COMENTARIOS
+    @OneToMany(mappedBy = "publicacionPadre")
+    private List<Publicacion> comentarios = new ArrayList<>();
+
+    //MAPEADO JPA PARA MULTIMEDIA
+    @OneToMany(mappedBy = "publicacion")
+    private List<Multiimedia> multimedia = new ArrayList<>();
+
+    //Constructor actualizado para tener lista de comentarios
+    public Publicacion(long idPub, String descripcion, Date fecha, boolean anonimo) {
+        this.idPub = idPub;
         this.descripcion = descripcion;
-        this.fecha = new Date();
+        this.fecha = fecha;
         this.anonimo = anonimo;
+        this.comentarios = new ArrayList<>(); 
+        this.multimedia = new ArrayList<>(); 
     }
+
 
     // Constructor vacío requerido para JPA
     public Publicacion() {
@@ -70,5 +85,42 @@ public class Publicacion {
     // Método para contar la cantidad de likes en la publicación
     public long contarLikes() {
         return likes.size();
+    }
+
+    //Métodos para manejar comentarios
+
+    /*Para añadir un nuevo comentario*/
+    public void addComentario(Publicacion comentario) {
+        /*Se establece la publicación actual como padre*/
+        comentario.setPublicacionPadre(this);
+        comentarios.add(comentario);
+    }
+
+    /*Para eliminar un comentario*/
+    public void removeComentario(Publicacion comentario) {
+        comentarios.remove(comentario);
+    }
+
+    /*Getter*/
+    public List<Publicacion> getComentarios() {
+        return comentarios;
+    }
+
+    /*Getter y setter para la publicación padre*/
+    public Publicacion getPublicacionPadre() {
+        return publicacionPadre;
+    }
+
+    public void setPublicacionPadre(Publicacion publicacionPadre) {
+        this.publicacionPadre = publicacionPadre;
+    }
+
+    public void actualizarReferencia(long idRef, boolean anonimo, List<Referencia> referencias) {
+        for (Referencia r : referencias) {
+            if (r.getIdRef() != null && r.getIdRef().equals(idRef)) {
+                r.setAnonimoRef(anonimo); 
+                break; 
+            }
+        }
     }
 }

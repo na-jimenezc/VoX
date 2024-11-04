@@ -24,6 +24,10 @@ public class Usuario {
     private String biografia;
     private String email;
 
+    /*Actualicación para Referencia*/
+    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL)
+    private List<Referencia> referencias;
+
     @OneToMany(mappedBy = "autor")
     private List<Publicacion> publicaciones = new ArrayList<>();
 
