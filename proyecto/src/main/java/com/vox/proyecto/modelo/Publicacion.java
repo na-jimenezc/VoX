@@ -48,7 +48,13 @@ public class Publicacion {
 
     // Método para agregar un like a la publicación
     public void agregarLike(Like nuevoLike) {
-        this.likes.add(nuevoLike);
+        // Check if this user has already liked this publication
+        for (Like like : likes) {
+            if (like.getUsuario().equals(nuevoLike.getUsuario())) {
+                return; // User has already liked this publication, do not add again
+            }
+        }
+        this.likes.add(nuevoLike); // Add the new like if it is unique
     }
 
     // Método para revelar la identidad del autor

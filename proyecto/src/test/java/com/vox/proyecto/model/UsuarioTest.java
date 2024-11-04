@@ -37,43 +37,33 @@ public class UsuarioTest {
     }
     
     @Test
-public void testDejarDeSeguirUsuarioNoSeguido() {
-    // Asegúrate de que usuario1 no sigue a usuario2
-    assertTrue(usuario1.getSeguidos().isEmpty(), "usuario1 no debería seguir a nadie al inicio");
-    
-    // usuario1 intenta dejar de seguir a usuario2
-    usuario1.dejarSeguir(usuario2);
-    
-    // Verifica que la lista de seguidos de usuario1 sigue vacía
-    assertTrue(usuario1.getSeguidos().isEmpty(), "usuario1 no debería tener usuarios seguidos después de intentar dejar de seguir a un no seguido");
-    
-    // Verifica que usuario2 aún tiene la misma cantidad de seguidores
-    assertEquals(0, usuario2.getSeguidores().size(), "usuario2 no debería tener seguidores después del intento fallido");
-}
-
-@Test
-public void testDarLikeAnonimo() {
-    // Arrange
-    Publicacion publicacion = usuario1.hacerPublicacion("Publicación para like anónimo", true);
-    
-    // Act
-    usuario1.darLikeAnonimo(publicacion);
-
-    // Assert
-    List<Like> likes = publicacion.getLikes();
-    assertEquals(1, likes.size(), "La publicación debe tener 1 like anónimo");
-    assertTrue(likes.get(0).getAnonimoLike(), "El like debe ser anónimo");
-}
+    public void testDejarDeSeguirUsuarioNoSeguido() {
+        // Asegúrate de que usuario1 no sigue a usuario2
+        assertTrue(usuario1.getSeguidos().isEmpty(), "usuario1 no debería seguir a nadie al inicio");
+        
+        // usuario1 intenta dejar de seguir a usuario2
+        usuario1.dejarSeguir(usuario2);
+        
+        // Verifica que la lista de seguidos de usuario1 sigue vacía
+        assertTrue(usuario1.getSeguidos().isEmpty(), "usuario1 no debería tener usuarios seguidos después de intentar dejar de seguir a un no seguido");
+        
+        // Verifica que usuario2 aún tiene la misma cantidad de seguidores
+        assertEquals(0, usuario2.getSeguidores().size(), "usuario2 no debería tener seguidores después del intento fallido");
+    }
 
     @Test
+    public void testDarLikeAnonimo() {
+        Publicacion publicacion = usuario1.hacerPublicacion("Publicación para like anónimo", true);
+        usuario1.darLikeAnonimo(publicacion);
+        List<Like> likes = publicacion.getLikes();
+        assertEquals(1, likes.size(), "La publicación debe tener 1 like anónimo");
+        assertTrue(likes.get(0).getAnonimoLike(), "El like debe ser anónimo");
+    }
+    
+    @Test
     public void testDarLikePublico() {
-        // Arrange
         Publicacion publicacion = usuario2.hacerPublicacion("Publicación para like público", false);
-        
-        // Act
         usuario1.darLikePublico(publicacion);
-
-        // Assert
         List<Like> likes = publicacion.getLikes();
         assertEquals(1, likes.size(), "La publicación debe tener 1 like público");
         assertFalse(likes.get(0).getAnonimoLike(), "El like no debe ser anónimo");
