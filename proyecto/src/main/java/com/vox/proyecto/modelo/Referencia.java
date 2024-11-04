@@ -27,10 +27,18 @@ public class Referencia {
     private Usuario usuario;
 
     /*Hacer métodos*/
-    public Referencia(Boolean anonimoRef, String username, Publicacion idPub) {
+    public Referencia(Boolean anonimoRef, String username, String idPub) {
         this.anonimoRef = anonimoRef;
         this.username = username;
-        this.publicacion = idPub;
+        //this.publicacion = idPub;
+    }
+    public Referencia() {
+ 
+    }
+    public Referencia(Boolean anonimo, String username2, Publicacion publicacion2) {
+        this.anonimoRef = anonimo;
+        this.username = username2;
+        this.publicacion = publicacion2;
     }
     /*Getters*/
     public Long getIdRef() {

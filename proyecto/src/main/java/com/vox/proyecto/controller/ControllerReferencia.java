@@ -16,7 +16,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/referencias")
-public class ReferenciaController {
+public class ControllerReferencia {
 
     @Autowired
     private ReferenciaRepository referenciaRepository;
