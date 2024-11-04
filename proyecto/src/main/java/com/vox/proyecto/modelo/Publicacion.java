@@ -38,7 +38,7 @@ public class Publicacion {
 
     //MAPEADO JPA PARA MULTIMEDIA
     @OneToMany(mappedBy = "publicacion")
-    private List<Multiimedia> multimedia = new ArrayList<>();
+    private List<Multimedia> multimedia = new ArrayList<>();
 
     //Constructor actualizado para tener lista de comentarios
     public Publicacion(long idPub, String descripcion, Date fecha, boolean anonimo) {
@@ -53,6 +53,11 @@ public class Publicacion {
 
     // Constructor vacío requerido para JPA
     public Publicacion() {
+    }
+
+
+    public Publicacion(Object object, String descripcion2, Boolean anonimo2) {
+        //TODO Auto-generated constructor stub
     }
 
 
