@@ -139,17 +139,17 @@ public class Usuario {
         publicacion.getLikes().add(nuevoLike);
     }*/
 
-    public void darLike(Publicacion publicacion, Boolean anonimo) {
-        // Verifica si ya existe un like del mismo usuario para la misma publicación
-        boolean existeLike = publicacion.getLikes().stream()
-            .anyMatch(l -> l.getUsuario().equals(this) && l.getAnonimoLike().equals(anonimo));
+    public void darLike(Publicacion publicacion, boolean anonimo) {
+        Like like = new Like(this, publicacion, anonimo);
+        publicacion.agregarLike(like);
+    }
+
+    public void darLikePublico(Publicacion publicacion) {
+        darLike(publicacion, false); // Call the existing method with false for public like
+    }
     
-        // Solo agrega un nuevo like si no existe uno del mismo usuario
-        if (!existeLike) {
-            Like nuevoLike = new Like(this, publicacion, anonimo);
-            this.likes.add(nuevoLike);
-            publicacion.getLikes().add(nuevoLike);
-        }
+    public void darLikeAnonimo(Publicacion publicacion) {
+        darLike(publicacion, true); // Call the existing method with true for anonymous like
     }
     
 
