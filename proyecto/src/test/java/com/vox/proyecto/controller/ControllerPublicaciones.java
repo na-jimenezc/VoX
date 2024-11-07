@@ -5,7 +5,6 @@ import org.springframework.web.bind.annotation.*;
 
 import com.vox.proyecto.modelo.Publicacion;
 import com.vox.proyecto.repository.PublicacionRepository;
-import com.vox.proyecto.repository.UsuarioRepository;
 
 import java.util.List;
 
@@ -15,9 +14,6 @@ public class ControllerPublicaciones {
 
     @Autowired
     private PublicacionRepository publicacionRepository;
-
-    @Autowired
-    private UsuarioRepository usuarioRepository;
 
     // Crear una nueva publicación
     @PostMapping("/crear")

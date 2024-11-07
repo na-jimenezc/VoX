@@ -1,11 +1,9 @@
 package com.vox.proyecto.modelo;
-//import java.util.Date;
-//import java.util.List;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
-//import jakarta.persistence.OneToMany;
 import lombok.Data;
 
 @Entity
@@ -18,28 +16,33 @@ public class Referencia {
 
     private Boolean anonimoRef;
     private String username;
+    //Mientras tanto sera un string
+    private String comentario;
 
-    /*REVISAR EL TEMA DE MANY TO ONE Y ONE TO MANY */
     @ManyToOne
     private Publicacion publicacion;
 
     @ManyToOne
     private Usuario usuario;
 
-    /*Hacer métodos*/
-    public Referencia(Boolean anonimoRef, String username, String idPub) {
+    // Constructor por defecto
+    public Referencia() {
+    }
+
+    public Referencia(Boolean anonimoRef, String username, Publicacion publicacion) {
         this.anonimoRef = anonimoRef;
         this.username = username;
-        //this.publicacion = idPub;
+        this.publicacion = publicacion;
     }
-    public Referencia() {
- 
-    }
-    public Referencia(Boolean anonimo, String username2, Publicacion publicacion2) {
-        this.anonimoRef = anonimo;
-        this.username = username2;
-        this.publicacion = publicacion2;
-    }
+// Constructor que recibe Usuario, Publicacion, Comentario (String) y UsuarioRef (String)
+    public Referencia(Usuario usuario, Publicacion publicacion, String comentario, String usuarioRef) {
+    this.usuario = usuario;
+    this.publicacion = publicacion;
+    this.comentario = comentario;
+    this.username = usuarioRef;   // Usuario referenciado (etiquetado en el comentario)
+}
+
+
     /*Getters*/
     public Long getIdRef() {
         return idRef;
@@ -53,7 +56,7 @@ public class Referencia {
         return username;
     }
 
-    public Publicacion getIdPub() {
+    public Publicacion getPublicacion() {
         return publicacion;
     }
 
@@ -70,14 +73,11 @@ public class Referencia {
         this.username = username;
     }
 
-    public void setIdPub(Publicacion idPub) {
-        this.publicacion = idPub;
+    public void setPublicacion(Publicacion publicacion) {
+        this.publicacion = publicacion;
     }
 
-    public void actualizarReferencia(boolean anonimo){
+    public void actualizarReferencia(boolean anonimo) {
         this.anonimoRef = anonimo;
     }
-    
 }
-
-    

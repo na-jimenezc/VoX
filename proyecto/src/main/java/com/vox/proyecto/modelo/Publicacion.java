@@ -40,6 +40,11 @@ public class Publicacion {
     @OneToMany(mappedBy = "publicacion")
     private List<Multimedia> multimedia = new ArrayList<>();
 
+    /*Actualicación para Referencia*/
+    @OneToMany(mappedBy = "publicacion")
+    private List<Referencia> referencias;
+    
+
     //Constructor actualizado para tener lista de comentarios
     public Publicacion(long idPub, String descripcion, Date fecha, boolean anonimo) {
         this.idPub = idPub;
@@ -67,7 +72,16 @@ public class Publicacion {
         this.multimedia = new ArrayList<>(); 
     }
     
-
+    public List<Referencia> getReferencias() {
+        if (this.referencias == null) {
+            this.referencias = new ArrayList<>();
+        }
+        return referencias;
+    }
+    
+    public void setReferencias(List<Referencia> referencias) {
+        this.referencias = referencias;
+    }
 
     // Método para cambiar el anonimato de la publicación
     public void cambiarAnonimato(Boolean anonimo) {

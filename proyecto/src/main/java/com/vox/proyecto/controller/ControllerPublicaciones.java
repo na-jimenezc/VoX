@@ -5,7 +5,6 @@ import org.springframework.web.bind.annotation.*;
 
 import com.vox.proyecto.modelo.Publicacion;
 import com.vox.proyecto.repository.PublicacionRepository;
-import com.vox.proyecto.repository.UsuarioRepository;
 
 import java.util.List;
 

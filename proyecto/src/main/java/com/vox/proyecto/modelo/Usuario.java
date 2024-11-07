@@ -80,7 +80,16 @@ public class Usuario {
         // Genera un hash basado en el idUsuario
         return idUsuario != null ? idUsuario.hashCode() : 0;
     }
+public List<Referencia> getReferencias() {
+    if (this.referencias == null) {
+        this.referencias = new ArrayList<>();
+    }
+    return referencias;
+}
 
+public void setReferencias(List<Referencia> referencias) {
+    this.referencias = referencias;
+}
 
     // Métodos para gestionar seguidores y seguidos
     /*
@@ -295,4 +304,34 @@ public class Usuario {
     public boolean eliminarPublicacion(Publicacion pubAEliminar) {
         return this.publicaciones.remove(pubAEliminar);
     }
+
+    public void hacerReferenciacion(Publicacion publicacion, String comentario, String usuarioRef) {
+        // Validar que la publicación no sea nula y que el usuario no se esté refiriendo a sí mismo
+        if (publicacion == null || publicacion.getAutor().equals(this)) {
+            throw new IllegalArgumentException("No se puede hacer una referencia a esta publicación.");
+        }
+    
+        // Validar que el usuarioRef no sea nulo o vacío
+        if (usuarioRef == null || usuarioRef.isEmpty()) {
+            throw new IllegalArgumentException("El usuario a referenciar no puede ser nulo o vacío.");
+        }
+    
+        // Crear la nueva referencia
+        Referencia nuevaReferencia = new Referencia(this, publicacion, comentario, usuarioRef);
+        
+        // Agregar la referencia al usuario
+        if (this.referencias == null) {
+            this.referencias = new ArrayList<>();  // Inicializar si no está inicializada
+        }
+        this.referencias.add(nuevaReferencia);
+        
+        // Agregar la referencia a la publicación para mantener la relación bidireccional
+        if (publicacion.getReferencias() == null) {
+            publicacion.setReferencias(new ArrayList<>());  // Inicializar si no está inicializada
+        }
+        publicacion.getReferencias().add(nuevaReferencia);
+    }
+    
+    
+    
 }
