@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.*;
 
 import com.vox.proyecto.modelo.Publicacion;
 import com.vox.proyecto.repository.PublicacionRepository;
+import com.vox.proyecto.repository.UsuarioRepository;
 
 import java.util.List;
 
@@ -14,6 +15,8 @@ public class ControllerPublicaciones {
 
     @Autowired
     private PublicacionRepository publicacionRepository;
+
+    @Autowired
 
     // Crear una nueva publicación
     @PostMapping("/crear")
@@ -49,5 +52,29 @@ public class ControllerPublicaciones {
     @GetMapping("/verificarPertenencia")
     public Boolean verificarPertenenciaPub(@RequestBody Publicacion publicacion, @RequestParam Long idUsuario) {
         return publicacion.getAutor().getIdUsuario().equals(idUsuario);
+    }
+
+    // Búsqueda de publicaciones por palabras clave
+    @GetMapping("/buscarPorPalabraClave")
+    public List<Publicacion> buscarPorPalabraClave(@RequestParam String keyword) {
+        return publicacionRepository.findByKeyword(keyword);
+    }
+
+    // Búsqueda de publicaciones por autor
+    @GetMapping("/buscarPorAutor")
+    public List<Publicacion> buscarPorAutor(@RequestParam Long idUsuario) {
+        return publicacionRepository.findByAutor_IdUsuario(idUsuario);
+    }
+
+    // Búsqueda de publicaciones con más likes
+    @GetMapping("/buscarPorLikes")
+    public List<Publicacion> buscarPorLikes() {
+        return publicacionRepository.findAllOrderByLikesDesc();
+    }
+
+    // Búsqueda de publicaciones por fecha de creación (más recientes primero)
+    @GetMapping("/buscarPorFecha")
+    public List<Publicacion> buscarPorFecha() {
+        return publicacionRepository.findAllOrderByFechaCreacionDesc();
     }
 }
