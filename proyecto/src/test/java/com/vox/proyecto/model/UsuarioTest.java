@@ -13,8 +13,7 @@ import java.util.List;
 public class UsuarioTest {
     private Usuario usuario1;
     private Usuario usuario2;
-    private Publicacion publicacion1;
-    private Publicacion publicacion2;
+    private Publicacion publicacion1, publicacion2;
 
     // Inicialización de usuarios y publicaciones antes de cada prueba
     @BeforeEach
