@@ -138,9 +138,6 @@ public class Publicacion {
         return publicacionPadre;
     }
 
-    public void setPublicacionPadre(Publicacion publicacionPadre) {
-        this.publicacionPadre = publicacionPadre;
-    }
 
     public void actualizarReferencia(long idRef, boolean anonimo, List<Referencia> referencias) {
         for (Referencia r : referencias) {

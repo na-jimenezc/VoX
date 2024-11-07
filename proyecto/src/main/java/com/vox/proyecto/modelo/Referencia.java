@@ -60,7 +60,5 @@ public class Referencia {
         this.anonimoRef = anonimoRef;
     }
 
-    public void actualizarReferencia(boolean anonimo) {
-        this.anonimoRef = anonimo;
-    }
+
 }
