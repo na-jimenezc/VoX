@@ -150,4 +150,31 @@ public class Publicacion {
             }
         }
     }
+    public void agregarReferencia(Usuario usuario, String comentario, String usuarioRef) {
+        // Crear la nueva referencia
+        Referencia nuevaReferencia = new Referencia(usuario, this, comentario, usuarioRef);
+    
+        // Agregar la referencia al usuario
+        if (usuario.getReferencias() == null) {
+            usuario.setReferencias(new ArrayList<>());
+        }
+        usuario.getReferencias().add(nuevaReferencia);
+    
+        // Agregar la referencia a la publicación para mantener la relación bidireccional
+        if (this.referencias == null) {
+            this.referencias = new ArrayList<>();
+        }
+        this.referencias.add(nuevaReferencia);
+    }
+    
+    public void hacerReferenciacion(String usuarioRef, String comentario, Usuario usuario) {
+        // Validar que la publicación no sea nula y que el usuario no se esté refiriendo a sí mismo
+        if (usuario == null || usuario.equals(this.getAutor())) {
+            throw new IllegalArgumentException("No se puede hacer una referencia a esta publicación.");
+        }
+    
+        // Llamar al método común para agregar la referencia
+        agregarReferencia(usuario, comentario, usuarioRef);
+    }
+    
 }

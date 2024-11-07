@@ -316,20 +316,8 @@ public void setReferencias(List<Referencia> referencias) {
             throw new IllegalArgumentException("El usuario a referenciar no puede ser nulo o vacío.");
         }
     
-        // Crear la nueva referencia
-        Referencia nuevaReferencia = new Referencia(this, publicacion, comentario, usuarioRef);
-        
-        // Agregar la referencia al usuario
-        if (this.referencias == null) {
-            this.referencias = new ArrayList<>();  // Inicializar si no está inicializada
-        }
-        this.referencias.add(nuevaReferencia);
-        
-        // Agregar la referencia a la publicación para mantener la relación bidireccional
-        if (publicacion.getReferencias() == null) {
-            publicacion.setReferencias(new ArrayList<>());  // Inicializar si no está inicializada
-        }
-        publicacion.getReferencias().add(nuevaReferencia);
+        // Llamar a un método común para agregar la referencia
+        publicacion.agregarReferencia(this, comentario, usuarioRef);
     }
     
     
