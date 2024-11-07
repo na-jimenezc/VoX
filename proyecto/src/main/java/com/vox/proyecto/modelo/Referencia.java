@@ -14,9 +14,8 @@ public class Referencia {
     @GeneratedValue
     private Long idRef;
 
-    private Boolean anonimoRef;
+    private Boolean anonimoRef; // Para saber si es una referencia pública o privada
     private String username;
-    //Mientras tanto sera un string
     private String comentario;
 
     @ManyToOne
@@ -29,21 +28,18 @@ public class Referencia {
     public Referencia() {
     }
 
-    public Referencia(Boolean anonimoRef, String username, Publicacion publicacion) {
-        this.anonimoRef = anonimoRef;
-        this.username = username;
-        this.publicacion = publicacion;
+    // Constructor para referencia pública o privada
+    public Referencia(Usuario usuario, Publicacion publicacion, String comentario, String usuarioRef, Boolean anonimoRef) {
+        this.usuario = usuario;         // Usuario que hace la referencia
+        this.publicacion = publicacion; // Publicación a la que se hace referencia
+        this.comentario = comentario;   // Comentario que acompaña la referencia
+        this.username = usuarioRef;     // Usuario etiquetado (referenciado)
+        this.anonimoRef = anonimoRef;   // Si es una referencia pública o privada
     }
-// Constructor que recibe Usuario, Publicacion, Comentario (String) y UsuarioRef (String)
-    public Referencia(Usuario usuario, Publicacion publicacion, String comentario, String usuarioRef) {
-    this.usuario = usuario;
-    this.publicacion = publicacion;
-    this.comentario = comentario;
-    this.username = usuarioRef;   // Usuario referenciado (etiquetado en el comentario)
-}
+    
 
 
-    /*Getters*/
+    /* Métodos adicionales si es necesario */
     public Long getIdRef() {
         return idRef;
     }
@@ -60,21 +56,8 @@ public class Referencia {
         return publicacion;
     }
 
-    /*Setters*/
-    public void setIdRef(Long idRef) {
-        this.idRef = idRef;
-    }
-
     public void setAnonimoRef(Boolean anonimoRef) {
         this.anonimoRef = anonimoRef;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public void setPublicacion(Publicacion publicacion) {
-        this.publicacion = publicacion;
     }
 
     public void actualizarReferencia(boolean anonimo) {

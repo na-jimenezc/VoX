@@ -305,19 +305,26 @@ public void setReferencias(List<Referencia> referencias) {
         return this.publicaciones.remove(pubAEliminar);
     }
 
-    public void hacerReferenciacion(Publicacion publicacion, String comentario, String usuarioRef) {
+    public void hacerReferenciacion(String usuarioRef, Publicacion publicacion, String comentario, Boolean anonimo) {
         // Validar que la publicación no sea nula y que el usuario no se esté refiriendo a sí mismo
         if (publicacion == null || publicacion.getAutor().equals(this)) {
             throw new IllegalArgumentException("No se puede hacer una referencia a esta publicación.");
         }
-    
-        // Validar que el usuarioRef no sea nulo o vacío
-        if (usuarioRef == null || usuarioRef.isEmpty()) {
-            throw new IllegalArgumentException("El usuario a referenciar no puede ser nulo o vacío.");
+
+        // Crear la nueva referencia con el usuarioRef (el nombre del usuario etiquetado)
+        Referencia nuevaReferencia = new Referencia(this, publicacion, comentario, usuarioRef, anonimo);
+
+        // Agregar la referencia al usuario (esta clase debe tener una lista de referencias)
+        if (this.referencias == null) {
+            this.referencias = new ArrayList<>();
         }
-    
-        // Llamar a un método común para agregar la referencia
-        publicacion.agregarReferencia(this, comentario, usuarioRef);
+        this.referencias.add(nuevaReferencia);
+
+        // Agregar la referencia a la publicación para mantener la relación bidireccional
+        if (publicacion.getReferencias() == null) {
+            publicacion.setReferencias(new ArrayList<>());
+        }
+        publicacion.getReferencias().add(nuevaReferencia);
     }
     
     

@@ -39,7 +39,7 @@ public class ControllerReferencia {
         Optional<Usuario> usuarioOpt = usuarioRepository.findById(idUsuario);
 
         if (publicacionOpt.isPresent() && usuarioOpt.isPresent()) {
-            Referencia nuevaReferencia = new Referencia(anonimo, username, publicacionOpt.get());
+            Referencia nuevaReferencia = new Referencia();
             nuevaReferencia.setUsuario(usuarioOpt.get());
             return ResponseEntity.ok(referenciaRepository.save(nuevaReferencia));
         }
