@@ -28,71 +28,106 @@ public class ControllerUsuariosTest {
 
     @Test
     public void testRegistrarUsuario() {
-        Usuario nuevoUsuario = new Usuario("nombre", "username", "password", 20, "carrera", "semestre", "biografia", "email@example.com", false);
+        // Dado
+        String nombre = "Juan";
+        String username = "juan123";
+        String password = "password/";
+        int edad = 20;
+        String carrera = "Ingeniería";
+        String semestre = "2";
+        String biografia = "Biografía de Juan";
+        String email = "juan@example.com";
 
+        // Cuando
+        Usuario nuevoUsuario = new Usuario(nombre, username, password, edad, carrera, semestre, biografia, email, false);
         when(usuarioRepository.save(any(Usuario.class))).thenReturn(nuevoUsuario);
 
-        controllerUsuarios.registrarUsuario("nombre", "username", "password", 20, "carrera", "semestre", "biografia", "email@example.com");
-
-        verify(usuarioRepository, times(1)).save(any(Usuario.class));
+        // Entonces
+        controllerUsuarios.registrarUsuario(nombre, username, password, edad, carrera, semestre, biografia, email);
+        verify(usuarioRepository, times(1)).save(any(Usuario.class));  // Verificar que se llama a save exactamente una vez
     }
 
     @Test
     public void testAutenticarUsuario() {
-        Usuario usuario = new Usuario("nombre", "username", "password", 20, "carrera", "semestre", "biografia", "email@example.com", false);
-        when(usuarioRepository.findByUsername("username")).thenReturn(usuario);
+        // Dado
+        String username = "juan123";
+        String password = "password/";
 
-        boolean autenticado = controllerUsuarios.autenticarUsuario("username", "password");
+        // Cuando
+        Usuario usuario = new Usuario("Juan", username, password, 20, "Ingeniería", "2", "Biografía de Juan", "juan@example.com", false);
+        when(usuarioRepository.findByUsername(username)).thenReturn(usuario);
 
-        System.out.println("Resultado de autenticación (correcto): " + autenticado); // Imprime el resultado en consola
-        assertTrue(autenticado);
+        // Entonces
+        boolean autenticado = controllerUsuarios.autenticarUsuario(username, password);
+        assertTrue(autenticado);  // Verificar que la autenticación fue exitosa
+        verify(usuarioRepository, times(1)).findByUsername(username);  // Verificar que findByUsername fue llamado exactamente una vez
     }
 
     @Test
     public void testAutenticarUsuarioFallo() {
-        when(usuarioRepository.findByUsername("username")).thenReturn(null);
+        // Dado
+        String username = "juan123";
+        String password = "wrongpassword";  // Contraseña incorrecta
 
-        boolean autenticado = controllerUsuarios.autenticarUsuario("username", "wrongpassword");
+        // Cuando
+        when(usuarioRepository.findByUsername(username)).thenReturn(null);
 
-        System.out.println("Resultado de autenticación (fallido): " + autenticado); // Imprime el resultado en consola
-        assertFalse(autenticado);
+        // Entonces
+        boolean autenticado = controllerUsuarios.autenticarUsuario(username, password);
+        assertFalse(autenticado);  // La autenticación debería fallar
     }
 
     @Test
     public void testVerificarUsuarioExistente() {
-        when(usuarioRepository.findByUsername("username")).thenReturn(new Usuario());
+        // Dado
+        String username = "juan123";
 
-        boolean existe = controllerUsuarios.verificarUsuarioExistente("username");
+        // Cuando
+        when(usuarioRepository.findByUsername(username)).thenReturn(new Usuario());
 
-        assertTrue(existe);
+        // Entonces
+        boolean existe = controllerUsuarios.verificarUsuarioExistente(username);
+        assertTrue(existe);  // El usuario debería existir
     }
 
     @Test
     public void testVerificarUsuarioNoExistente() {
-        when(usuarioRepository.findByUsername("username")).thenReturn(null);
+        // Dado
+        String username = "juan123";
 
-        boolean existe = controllerUsuarios.verificarUsuarioExistente("username");
+        // Cuando
+        when(usuarioRepository.findByUsername(username)).thenReturn(null);
 
-        assertFalse(existe);
+        // Entonces
+        boolean existe = controllerUsuarios.verificarUsuarioExistente(username);
+        assertFalse(existe);  // El usuario no debería existir
     }
 
     @Test
     public void testBorrarUsuario() {
+        // Dado
         Long id = 1L;
 
+        // Cuando
         controllerUsuarios.borrarUsuario(id);
 
-        verify(usuarioRepository, times(1)).deleteById(id);
+        // Entonces
+        verify(usuarioRepository, times(1)).deleteById(id);  // Verificar que se llama a deleteById exactamente una vez
     }
 
     @Test
     public void testEditarUsuario() {
-        Usuario usuario = new Usuario("nombre", "username", "password", 20, "carrera", "semestre", "biografia", "email@example.com", false);
-        when(usuarioRepository.findByUsername("username")).thenReturn(usuario);
+        // Dado
+        String username = "juan123";
+        String nuevoUsername = "juan456";
+        Usuario usuario = new Usuario("Juan", username, "password", 20, "Ingeniería", "2", "Biografía de Juan", "juan@example.com", false);
+        when(usuarioRepository.findByUsername(username)).thenReturn(usuario);
 
-        controllerUsuarios.editarUsuario("username", "nuevoUsername");
+        // Cuando
+        controllerUsuarios.editarUsuario(username, nuevoUsername);
 
-        verify(usuarioRepository, times(1)).save(usuario);
-        assertEquals("nuevoUsername", usuario.getUsername());
+        // Entonces
+        verify(usuarioRepository, times(1)).save(usuario);  // Verificar que se llama a save
+        assertEquals(nuevoUsername, usuario.getUsername());  // Verificar que el username fue actualizado
     }
 }
