@@ -15,7 +15,8 @@ public class ControllerUsuarios {
     // Método para registrar un nuevo usuario
     public void registrarUsuario(String nombre, String username, String password, 
     int edad, String carrera, String semestre, String biografia, String email) {
-        Usuario nuevoUsuario = new Usuario(nombre, username, password, edad, carrera, semestre, biografia, email, false);
+        Usuario nuevoUsuario = new Usuario(nombre, username, password, edad, carrera, semestre, biografia, email,false)
+        );
         usuarioRepository.save(nuevoUsuario);
     }
 
