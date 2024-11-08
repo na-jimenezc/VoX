@@ -186,4 +186,18 @@ public class Publicacion {
         }
         this.referencias.add(nuevaReferencia);
     }
+    // Método para agregar un comentario a una publicación
+    public void agregarComentario(Usuario autor, String textoComentario, boolean esAnonimo) {
+      // Validar que el texto del comentario no esté vacío
+        if (textoComentario == null || textoComentario.trim().isEmpty()) {
+            throw new IllegalArgumentException("El comentario no puede estar vacío.");
+        }
+
+        // Crear el nuevo comentario
+        Publicacion comentario = new Publicacion(autor, textoComentario, esAnonimo);
+
+     // Agregar el comentario a la lista de comentarios de la publicación actual
+        this.addComentario(comentario);
+    }
+
 }
