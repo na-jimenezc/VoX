@@ -67,6 +67,15 @@ public class Publicacion {
     }
 
 
+    public Publicacion() {
+        this.fecha = new Date(); 
+        // Inicializa la lista de likes, lista de comentarios y lista de Multimedia
+        this.likes = new ArrayList<>(); 
+        this.comentarios = new ArrayList<>(); 
+        this.multimedia = new ArrayList<>(); 
+    }
+
+
     // Método para cambiar el anonimato de la publicación
     public void cambiarAnonimato(Boolean anonimo) {
         this.anonimo = anonimo;
