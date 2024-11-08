@@ -210,7 +210,7 @@ public class Publicacion {
         }
     }
 
-    public void crearPublicacionConMultimedia(Usuario autor, String descripcion, List<Multimedia> multimediaAdjunta, boolean esAnonimo) {
+    public void aniadirContenidoMultimedia(Usuario autor, String descripcion, List<Multimedia> multimediaAdjunta, boolean esAnonimo) {
         // Validación de publicación sin texto y sin multimedia (Flujo alterno 3)
         if ((descripcion == null || descripcion.trim().isEmpty()) && (multimediaAdjunta == null || multimediaAdjunta.isEmpty())) {
             throw new IllegalArgumentException("No puedes publicar sin escribir texto ni adjuntar multimedia.");
@@ -241,6 +241,25 @@ public class Publicacion {
         } else {
             System.out.println("Publicación realizada en modo normal con la identidad del usuario.");
         }
-    
     }
+    public void eliminarContenidoMultimedia(Long idMultimedia) {
+        // Buscar el archivo multimedia en la lista de multimedia de la publicación
+        Multimedia mediaAEliminar = null;
+        
+        for (Multimedia media : this.multimedia) {
+            if (media.getIdMul().equals(idMultimedia)) {
+                mediaAEliminar = media;
+                break;
+            }
+        }
+        
+        // Si el archivo multimedia fue encontrado, se elimina
+        if (mediaAEliminar != null) {
+            this.multimedia.remove(mediaAEliminar);
+            System.out.println("El contenido multimedia con ID " + idMultimedia + " ha sido eliminado.");
+        } else {
+            System.out.println("No se encontró contenido multimedia con el ID especificado.");
+        }
+    }
+    
 }
