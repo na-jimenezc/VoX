@@ -199,5 +199,16 @@ public class Publicacion {
      // Agregar el comentario a la lista de comentarios de la publicación actual
         this.addComentario(comentario);
     }
+        // Método para revelar la identidad del autor de un comentario específico
+    public void revelarIdentidadComentario(Long idComentario) {
+        for (Publicacion comentario : comentarios) {
+            if (comentario.getIdPub().equals(idComentario)) {
+                 // Cambia el anonimato del comentario a falso
+                comentario.setAnonimo(false);
+                break; 
+            }
+        }
+    }
+
 
 }
