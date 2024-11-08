@@ -91,6 +91,11 @@ public class Publicacion {
         }
         this.likes.add(nuevoLike); // Add the new like if it is unique
     }
+    
+    //Set para metodo ControllerReferenciaTest
+    public void setIdPublicacion(Long idPublicacion) {
+        this.idPub = idPublicacion;
+    }
 
     // Método para revelar la identidad del autor
     public void revelarIdentidad() {

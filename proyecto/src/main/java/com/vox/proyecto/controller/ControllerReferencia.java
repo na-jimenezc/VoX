@@ -33,14 +33,15 @@ public class ControllerReferencia {
             @RequestParam Long idPublicacion,
             @RequestParam Long idUsuario,
             @RequestParam Boolean anonimo,
-            @RequestParam String username) {
+            @RequestParam String username,
+            @RequestParam String comentario) {  // Agregado el comentario
 
         Optional<Publicacion> publicacionOpt = publicacionRepository.findById(idPublicacion);
         Optional<Usuario> usuarioOpt = usuarioRepository.findById(idUsuario);
 
         if (publicacionOpt.isPresent() && usuarioOpt.isPresent()) {
-            Referencia nuevaReferencia = new Referencia();
-            nuevaReferencia.setUsuario(usuarioOpt.get());
+            Referencia nuevaReferencia = new Referencia(usuarioOpt.get(), publicacionOpt.get(), comentario, username, anonimo);
+            nuevaReferencia.notificarReferenciacion(); // Llamada a la notificación
             return ResponseEntity.ok(referenciaRepository.save(nuevaReferencia));
         }
         return ResponseEntity.notFound().build();

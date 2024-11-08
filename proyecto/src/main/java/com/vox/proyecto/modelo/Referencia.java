@@ -36,8 +36,6 @@ public class Referencia {
         this.username = usuarioRef;     // Usuario etiquetado (referenciado)
         this.anonimoRef = anonimoRef;   // Si es una referencia pública o privada
     }
-    
-
 
     /* Métodos adicionales si es necesario */
     public Long getIdRef() {
@@ -59,10 +57,11 @@ public class Referencia {
     public void setAnonimoRef(Boolean anonimoRef) {
         this.anonimoRef = anonimoRef;
     }
+
     public void notificarReferenciacion() {
         // Verificar si el usuario mencionado existe y tiene notificaciones activadas
         if (usuario != null) {
-            if (usuario. isNotificacionesActivas()) {
+            if (usuario.isNotificacionesActivas()) {
                 System.out.println("Notificación enviada a " + usuario.getUsername() + " por una mención en la publicación.");
                 // Aquí podrías implementar la lógica real de envío de notificación, como llamar a un servicio de notificaciones
             } else {
@@ -72,6 +71,4 @@ public class Referencia {
             throw new IllegalArgumentException("El usuario mencionado no existe. No se puede enviar la notificación.");
         }
     }
-    
-
 }
