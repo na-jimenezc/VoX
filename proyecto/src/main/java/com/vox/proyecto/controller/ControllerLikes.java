@@ -1,5 +1,7 @@
 package com.vox.proyecto.controller;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -12,8 +14,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.vox.proyecto.modelo.Like;
 import com.vox.proyecto.modelo.Publicacion;
+import com.vox.proyecto.modelo.Usuario;
 import com.vox.proyecto.repository.LikeRepository;
 import com.vox.proyecto.repository.PublicacionRepository;
+import com.vox.proyecto.repository.UsuarioRepository;
 
 @RestController
 @RequestMapping("/likes")
@@ -21,6 +25,9 @@ public class ControllerLikes {
 
     @Autowired
     private LikeRepository likeRepository;
+
+    @Autowired
+    private UsuarioRepository usuarioRepository;
 
     @Autowired
     private PublicacionRepository publicacionRepository;
@@ -36,7 +43,9 @@ public class ControllerLikes {
         // Crea un nuevo Like
         Like nuevoLike = new Like();
         nuevoLike.setPublicacion(publicacion);
-        nuevoLike.setIdUser(idUser);
+
+        Optional<Usuario> user = usuarioRepository.findById(idUser);
+        nuevoLike.setUsuario(user.get());
 
         // Guarda el like y retorna la respuesta
         return ResponseEntity.ok(likeRepository.save(nuevoLike));

@@ -1,15 +1,17 @@
 package com.vox.proyecto.controller;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.*;
 
-import com.vox.proyecto.modelo.Usuario;
-import com.vox.proyecto.repository.UsuarioRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+
+import com.vox.proyecto.modelo.Usuario;
+import com.vox.proyecto.repository.UsuarioRepository;
 
 public class ControllerUsuariosTest {
 
@@ -26,7 +28,7 @@ public class ControllerUsuariosTest {
 
     @Test
     public void testRegistrarUsuario() {
-        Usuario nuevoUsuario = new Usuario("nombre", "username", "password", 20, "carrera", "semestre", "biografia", "email@example.com");
+        Usuario nuevoUsuario = new Usuario("nombre", "username", "password", 20, "carrera", "semestre", "biografia", "email@example.com", false);
 
         when(usuarioRepository.save(any(Usuario.class))).thenReturn(nuevoUsuario);
 
@@ -37,7 +39,7 @@ public class ControllerUsuariosTest {
 
     @Test
     public void testAutenticarUsuario() {
-        Usuario usuario = new Usuario("nombre", "username", "password", 20, "carrera", "semestre", "biografia", "email@example.com");
+        Usuario usuario = new Usuario("nombre", "username", "password", 20, "carrera", "semestre", "biografia", "email@example.com", false);
         when(usuarioRepository.findByUsername("username")).thenReturn(usuario);
 
         boolean autenticado = controllerUsuarios.autenticarUsuario("username", "password");
@@ -85,7 +87,7 @@ public class ControllerUsuariosTest {
 
     @Test
     public void testEditarUsuario() {
-        Usuario usuario = new Usuario("nombre", "username", "password", 20, "carrera", "semestre", "biografia", "email@example.com");
+        Usuario usuario = new Usuario("nombre", "username", "password", 20, "carrera", "semestre", "biografia", "email@example.com", false);
         when(usuarioRepository.findByUsername("username")).thenReturn(usuario);
 
         controllerUsuarios.editarUsuario("username", "nuevoUsername");

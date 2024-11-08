@@ -1,5 +1,9 @@
 package com.vox.proyecto.model;
 
+import static org.junit.jupiter.api.Assertions.*;
+
+import java.util.List;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -7,23 +11,20 @@ import com.vox.proyecto.modelo.Like;
 import com.vox.proyecto.modelo.Publicacion;
 import com.vox.proyecto.modelo.Seguimiento;
 import com.vox.proyecto.modelo.Usuario;
-import static org.junit.jupiter.api.Assertions.*;
-import java.util.List;
 
 public class UsuarioTest {
     private Usuario usuario1;
     private Usuario usuario2;
-    private Publicacion publicacion1, publicacion2;
+    private Publicacion publicacion1;
 
     // Inicialización de usuarios y publicaciones antes de cada prueba
     @BeforeEach
     public void setUp() {
-        usuario1 = new Usuario("Katheryn", "kathe123", "contraseña", 18, "Ingeniería de Sistemas", "4to", "Monogamía, Dios y Patria", "KatherynGuasca@javeriana.edu.co");
-        usuario2 = new Usuario("Ardi", "ardi123", "contraseña", 119, "Ingeniería de Bucaramanga", "4to", "Viva el atlético Bucaramanga", "JuanArdi@javeriana.edu.co");
+        usuario1 = new Usuario("Katheryn", "kathe123", "contraseña", 18, "Ingeniería de Sistemas", "4to", "Monogamía, Dios y Patria", "KatherynGuasca@javeriana.edu.co", false);
+        usuario2 = new Usuario("Ardi", "ardi123", "contraseña", 119, "Ingeniería de Bucaramanga", "4to", "Viva el atlético Bucaramanga", "JuanArdi@javeriana.edu.co", false);
 
         // Publicaciones con autores y configuraciones iniciales
         publicacion1 = new Publicacion(usuario1, "Quiero saber el nombre de este chico", true);
-        publicacion2 = new Publicacion(usuario2, "Les quiero contar una historia...", false);
     }
 
     @Test

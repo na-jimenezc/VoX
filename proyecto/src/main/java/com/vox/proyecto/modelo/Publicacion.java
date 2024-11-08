@@ -29,12 +29,11 @@ public class Publicacion {
     @ManyToOne
     private Publicacion publicacionPadre;
 
-    @OneToMany(mappedBy = "publicacion")
-    private List<Like> likes = new ArrayList<>();
-
-    //MAPEADO JPA PARA LOS COMENTARIOS
     @OneToMany(mappedBy = "publicacionPadre")
     private List<Publicacion> comentarios = new ArrayList<>();
+
+    @OneToMany(mappedBy = "publicacion")
+    private List<Like> likes = new ArrayList<>();
 
     //MAPEADO JPA PARA MULTIMEDIA
     @OneToMany(mappedBy = "publicacion")
@@ -56,11 +55,6 @@ public class Publicacion {
     }
 
 
-    // Constructor vacío requerido para JPA
-    public Publicacion() {
-    }
-
-
     public Publicacion(Usuario autor, String descripcion, Boolean anonimo) {
         this.autor = autor;
         this.descripcion = descripcion;
@@ -71,17 +65,7 @@ public class Publicacion {
         this.comentarios = new ArrayList<>(); 
         this.multimedia = new ArrayList<>(); 
     }
-    
-    public List<Referencia> getReferencias() {
-        if (this.referencias == null) {
-            this.referencias = new ArrayList<>();
-        }
-        return referencias;
-    }
-    
-    public void setReferencias(List<Referencia> referencias) {
-        this.referencias = referencias;
-    }
+
 
     // Método para cambiar el anonimato de la publicación
     public void cambiarAnonimato(Boolean anonimo) {
@@ -127,17 +111,6 @@ public class Publicacion {
     public void removeComentario(Publicacion comentario) {
         comentarios.remove(comentario);
     }
-
-    /*Getter*/
-    public List<Publicacion> getComentarios() {
-        return comentarios;
-    }
-
-    /*Getter y setter para la publicación padre*/
-    public Publicacion getPublicacionPadre() {
-        return publicacionPadre;
-    }
-
 
     public void actualizarReferencia(long idRef, boolean anonimo, List<Referencia> referencias) {
         for (Referencia r : referencias) {
@@ -186,6 +159,7 @@ public class Publicacion {
         }
         this.referencias.add(nuevaReferencia);
     }
+
     // Método para agregar un comentario a una publicación
     public void agregarComentario(Usuario autor, String textoComentario, boolean esAnonimo) {
       // Validar que el texto del comentario no esté vacío
@@ -199,7 +173,8 @@ public class Publicacion {
      // Agregar el comentario a la lista de comentarios de la publicación actual
         this.addComentario(comentario);
     }
-        // Método para revelar la identidad del autor de un comentario específico
+
+    // Método para revelar la identidad del autor de un comentario específico
     public void revelarIdentidadComentario(Long idComentario) {
         for (Publicacion comentario : comentarios) {
             if (comentario.getIdPub().equals(idComentario)) {

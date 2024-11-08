@@ -9,7 +9,10 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
+import lombok.Data;
+
 @Entity
+@Data
 public class Usuario {
 
     @Id
@@ -58,34 +61,6 @@ public class Usuario {
         this.biografia = biografia;
         this.email = email;
         this.notificacionesActivas = notificacionesActivas;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (obj == null || getClass() != obj.getClass()) {
-            return false;
-        }
-        Usuario other = (Usuario) obj;
-        return idUsuario != null && idUsuario.equals(other.idUsuario);
-    }
-
-    @Override
-    public int hashCode() {
-        return idUsuario != null ? idUsuario.hashCode() : 0;
-    }
-
-    public List<Referencia> getReferencias() {
-        if (this.referencias == null) {
-            this.referencias = new ArrayList<>();
-        }
-        return referencias;
-    }
-
-    public void setReferencias(List<Referencia> referencias) {
-        this.referencias = referencias;
     }
 
     public void seguir(Usuario usuario) {
@@ -184,118 +159,5 @@ public class Usuario {
         publicacion.getReferencias().add(nuevaReferencia);
     }
 
-    // Métodos get/set para cada atributo
-    public Long getIdUsuario() {
-        return idUsuario;
-    }
-
-    public void setIdUsuario(Long idUsuario) {
-        this.idUsuario = idUsuario;
-    }
-
-    public String getNombre() {
-        return nombre;
-    }
-
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public int getEdad() {
-        return edad;
-    }
-
-    public void setEdad(int edad) {
-        this.edad = edad;
-    }
-
-    public String getCarrera() {
-        return carrera;
-    }
-
-    public void setCarrera(String carrera) {
-        this.carrera = carrera;
-    }
-
-    public String getSemestre() {
-        return semestre;
-    }
-
-    public void setSemestre(String semestre) {
-        this.semestre = semestre;
-    }
-
-    public String getBiografia() {
-        return biografia;
-    }
-
-    public void setBiografia(String biografia) {
-        this.biografia = biografia;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public boolean isNotificacionesActivas() {
-        return notificacionesActivas;
-    }
-
-    public void setNotificacionesActivas(boolean notificacionesActivas) {
-        this.notificacionesActivas = notificacionesActivas;
-    }
-
-    public List<Publicacion> getPublicaciones() {
-        return publicaciones;
-    }
-
-    public void setPublicaciones(List<Publicacion> publicaciones) {
-        this.publicaciones = publicaciones;
-    }
-
-    public List<Like> getLikes() {
-        return likes;
-    }
-
-    public void setLikes(List<Like> likes) {
-        this.likes = likes;
-    }
-
-    public List<Seguimiento> getSeguidores() {
-        return seguidores;
-    }
-
-    public void setSeguidores(List<Seguimiento> seguidores) {
-        this.seguidores = seguidores;
-    }
-
-    public List<Seguimiento> getSeguidos() {
-        return seguidos;
-    }
-
-    public void setSeguidos(List<Seguimiento> seguidos) {
-        this.seguidos = seguidos;
-    }
- 
     
 }

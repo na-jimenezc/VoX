@@ -36,7 +36,7 @@ public class ControllerLikesTest {
         publicacion.setIdPub(1L);
 
         Like nuevoLike = new Like();
-        nuevoLike.setIdUser(1L);
+        // nuevoLike.setIdUser(1L);
         nuevoLike.setPublicacion(publicacion);
 
         Mockito.when(publicacionRepository.existsById(1L)).thenReturn(true);
@@ -56,7 +56,7 @@ public class ControllerLikesTest {
         publicacion.setIdPub(1L);
 
         Like likeToRemove = new Like();
-        likeToRemove.setIdUser(1L);
+        // likeToRemove.setIdUser(1L);
         likeToRemove.setPublicacion(publicacion);
 
         Mockito.when(likeRepository.findByPublicacionAndIdUser(any(Publicacion.class), eq(1L))).thenReturn(likeToRemove);

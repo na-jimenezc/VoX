@@ -5,12 +5,18 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 @Entity
+@Data
+@NoArgsConstructor
 public class Like {
 
     @Id
     @GeneratedValue
     private Long idLike;
+
     private Boolean anonimoLike;
 
     @ManyToOne
@@ -28,11 +34,6 @@ public class Like {
         publicacion.getLikes().add(this);
     }
 
-    // Constructor sin argumentos
-    public Like() {
-        // Constructor vacío
-    }
-
     // Método para eliminar el like de una publicación
     public void eliminarLike() {
         if (publicacion != null) {
@@ -46,45 +47,4 @@ public class Like {
         this.anonimoLike = anonimo;
     }
 
-    // Getters y Setters
-    public Long getIdLike() {
-        return idLike;
-    }
-
-    public void setIdLike(Long idLike) {
-        this.idLike = idLike;
-    }
-
-    public Boolean getAnonimoLike() {
-        return anonimoLike;
-    }
-
-    public void setAnonimoLike(Boolean anonimoLike) {
-        this.anonimoLike = anonimoLike;
-    }
-
-    public Usuario getUsuario() {
-        return usuario;
-    }
-
-    public void setUsuario(Usuario usuario) {
-        this.usuario = usuario;
-    }
-
-    public Publicacion getPublicacion() {
-        return publicacion;
-    }
-
-    public void setPublicacion(Publicacion publicacion) {
-        this.publicacion = publicacion;
-    }
-
-    // Métodos no implementados (eliminados para evitar errores)
-    public void setIdUser(Long idUser) {
-        throw new UnsupportedOperationException("Unimplemented method 'setIdUser'");
-    }
-
-    public Long getIdUser() {
-        throw new UnsupportedOperationException("Unimplemented method 'getIdUser'");
-    }
 }

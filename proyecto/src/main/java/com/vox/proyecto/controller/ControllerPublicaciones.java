@@ -1,11 +1,12 @@
 package com.vox.proyecto.controller;
 
+import com.vox.proyecto.modelo.Publicacion;
+import com.vox.proyecto.repository.PublicacionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import com.vox.proyecto.modelo.Publicacion;
-import com.vox.proyecto.repository.PublicacionRepository;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/publicaciones")
@@ -14,65 +15,49 @@ public class ControllerPublicaciones {
     @Autowired
     private PublicacionRepository publicacionRepository;
 
-    @Autowired
-
     // Crear una nueva publicación
-    @PostMapping("/crear")
-    public Publicacion hacerPublicacion(@RequestParam String descripcion, @RequestParam Boolean anonimo) {
-        Publicacion nuevaPublicacion = new Publicacion(null, descripcion, anonimo);
-        return publicacionRepository.save(nuevaPublicacion);
+    @PostMapping
+    public Publicacion crearPublicacion(@RequestBody Publicacion publicacion) {
+        return publicacionRepository.save(publicacion);
     }
 
-    // Revelar la identidad del autor de una publicación específica
-    @PutMapping("/revelarIdentidad")
-    public void revelarIdentidadPub(@RequestBody Publicacion publicacion) {
-        publicacion.revelarIdentidad();
-        publicacionRepository.save(publicacion);
+    // Obtener todas las publicaciones
+    @GetMapping
+    public List<Publicacion> obtenerPublicaciones() {
+        return publicacionRepository.findAll();
     }
 
-    // Revelar la identidad de todos los autores de las publicaciones
-    @PutMapping("/revelarTodasIdentidad")
-    public void revelarTodasIdentidadPub() {
-        List<Publicacion> publicaciones = publicacionRepository.findAll();
-        for (Publicacion publicacion : publicaciones) {
-            publicacion.revelarIdentidad();
-            publicacionRepository.save(publicacion);
+    // Obtener una publicación por ID
+    @GetMapping("/{id}")
+    public Publicacion obtenerPublicacionPorId(@PathVariable Long id) {
+        return publicacionRepository.findById(id).orElse(null);
+    }
+
+    // Actualizar una publicación por ID
+    @PutMapping("/{id}")
+    public Publicacion actualizarPublicacion(@PathVariable Long id, @RequestBody Publicacion publicacionActualizada) {
+        Optional<Publicacion> optionalPublicacion = publicacionRepository.findById(id);
+
+        if (optionalPublicacion.isPresent()) {
+            Publicacion publicacion = optionalPublicacion.get();
+            publicacion.setDescripcion(publicacionActualizada.getDescripcion());
+            publicacion.setFecha(publicacionActualizada.getFecha());
+            publicacion.setAnonimo(publicacionActualizada.getAnonimo());
+            publicacion.setAutor(publicacionActualizada.getAutor());
+            publicacion.setComentarios(publicacionActualizada.getComentarios());
+            publicacion.setLikes(publicacionActualizada.getLikes());
+            publicacion.setMultimedia(publicacionActualizada.getMultimedia());
+            publicacion.setReferencias(publicacionActualizada.getReferencias());
+
+            return publicacionRepository.save(publicacion);
+        } else {
+            throw new RuntimeException("Publicación no encontrada con ID: " + id);
         }
     }
 
-    // Eliminar una publicación específica
-    @DeleteMapping("/eliminar")
-    public void eliminarPublicacion(@RequestBody Publicacion publicacion) {
-        publicacionRepository.delete(publicacion);
-    }
-
-    // Verificar si un usuario es el autor de una publicación
-    @GetMapping("/verificarPertenencia")
-    public Boolean verificarPertenenciaPub(@RequestBody Publicacion publicacion, @RequestParam Long idUsuario) {
-        return publicacion.getAutor().getIdUsuario().equals(idUsuario);
-    }
-
-    // Búsqueda de publicaciones por palabras clave
-    @GetMapping("/buscarPorPalabraClave")
-    public List<Publicacion> buscarPorPalabraClave(@RequestParam String keyword) {
-        return publicacionRepository.findByKeyword(keyword);
-    }
-
-    // Búsqueda de publicaciones por autor
-    @GetMapping("/buscarPorAutor")
-    public List<Publicacion> buscarPorAutor(@RequestParam Long idUsuario) {
-        return publicacionRepository.findByAutor_IdUsuario(idUsuario);
-    }
-
-    // Búsqueda de publicaciones con más likes
-    @GetMapping("/buscarPorLikes")
-    public List<Publicacion> buscarPorLikes() {
-        return publicacionRepository.findAllOrderByLikesDesc();
-    }
-
-    // Búsqueda de publicaciones por fecha de creación (más recientes primero)
-    @GetMapping("/buscarPorFecha")
-    public List<Publicacion> buscarPorFecha() {
-        return publicacionRepository.findAllOrderByFechaCreacionDesc();
+    // Eliminar una publicación por ID
+    @DeleteMapping("/{id}")
+    public void eliminarPublicacion(@PathVariable Long id) {
+        publicacionRepository.deleteById(id);
     }
 }
