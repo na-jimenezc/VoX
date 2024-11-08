@@ -210,5 +210,37 @@ public class Publicacion {
         }
     }
 
-
+    public void crearPublicacionConMultimedia(Usuario autor, String descripcion, List<Multimedia> multimediaAdjunta, boolean esAnonimo) {
+        // Validación de publicación sin texto y sin multimedia (Flujo alterno 3)
+        if ((descripcion == null || descripcion.trim().isEmpty()) && (multimediaAdjunta == null || multimediaAdjunta.isEmpty())) {
+            throw new IllegalArgumentException("No puedes publicar sin escribir texto ni adjuntar multimedia.");
+        }
+    
+        // Advertencia si el usuario intenta publicar sin multimedia, pero permite continuar (Flujo alterno 2)
+        if (multimediaAdjunta == null || multimediaAdjunta.isEmpty()) {
+            System.out.println("Advertencia: Estás publicando sin adjuntar multimedia.");
+        }
+    
+        // Inicializar los atributos de la publicación
+        this.autor = autor;
+        this.descripcion = descripcion;
+        this.fecha = new Date(); // Fecha actual
+        this.anonimo = esAnonimo;
+    
+        // Agregar multimedia si hay archivos adjuntos
+        if (multimediaAdjunta != null) {
+            for (Multimedia media : multimediaAdjunta) {
+                media.setIdPub(this);  // Vincular cada archivo multimedia con esta publicación
+                this.multimedia.add(media);
+            }
+        }
+    
+        // Publicar en modo normal o anónimo según la opción seleccionada
+        if (esAnonimo) {
+            System.out.println("Publicación realizada en modo anónimo.");
+        } else {
+            System.out.println("Publicación realizada en modo normal con la identidad del usuario.");
+        }
+    
+    }
 }
