@@ -54,7 +54,7 @@ public class ControllerPublicaciones {
     // Búsqueda de publicaciones por palabras clave
     @GetMapping("/buscarPorPalabraClave")
     public List<Publicacion> buscarPorPalabraClave(@RequestParam String keyword) {
-        return publicacionRepository.findByKeyword(keyword);
+        return publicacionRepository.findById(keyword);
     }
 
     // Búsqueda de publicaciones por autor

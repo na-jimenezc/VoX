@@ -18,4 +18,11 @@ public interface PublicacionRepository extends JpaRepository<Publicacion, Long> 
     // Obtener todas las publicaciones ordenadas por la cantidad de likes en orden descendente
     @Query("SELECT p FROM Publicacion p LEFT JOIN p.likes likes GROUP BY p ORDER BY COUNT(likes) DESC")
     List<Publicacion> findAllOrderByLikesCountDesc();
+
+    // Obtener todas las publicaciones de un autor específico por su ID de usuario
+    List<Publicacion> findByAutor_Id(Long idUsuario);
+
+    // Búsqueda de publicaciones por descripción que coincida con una palabra clave
+    @Query("SELECT p FROM Publicacion p WHERE LOWER(p.descripcion) LIKE LOWER(CONCAT('%', :keyword, '%'))")
+    List<Publicacion> searchByKeywordInDescripcion(String keyword);
 }
