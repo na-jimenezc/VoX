@@ -9,7 +9,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
-
 @Entity
 public class Usuario {
 
@@ -25,8 +24,9 @@ public class Usuario {
     private String semestre;
     private String biografia;
     private String email;
+    private boolean notificacionesActivas;
 
-    /*Actualicación para Referencia*/
+    /* Actualización para Referencia */
     @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL)
     private List<Referencia> referencias;
 
@@ -48,7 +48,7 @@ public class Usuario {
 
     // Constructor completo para inicializar todos los atributos
     public Usuario(String nombre, String username, String password, int edad, String carrera, String semestre,
-                   String biografia, String email) {
+                   String biografia, String email, boolean notificacionesActivas) {
         this.nombre = nombre;
         this.username = username;
         this.password = password;
@@ -57,73 +57,51 @@ public class Usuario {
         this.semestre = semestre;
         this.biografia = biografia;
         this.email = email;
+        this.notificacionesActivas = notificacionesActivas;
     }
 
     @Override
     public boolean equals(Object obj) {
-        // Verifica si son el mismo objeto
         if (this == obj) {
             return true;
         }
-        // Verifica si el objeto es nulo o no es de la misma clase
         if (obj == null || getClass() != obj.getClass()) {
             return false;
         }
-        // Realiza la conversión
         Usuario other = (Usuario) obj;
-        // Compara los atributos que identifican de manera única al usuario
         return idUsuario != null && idUsuario.equals(other.idUsuario);
     }
 
     @Override
     public int hashCode() {
-        // Genera un hash basado en el idUsuario
         return idUsuario != null ? idUsuario.hashCode() : 0;
     }
-public List<Referencia> getReferencias() {
-    if (this.referencias == null) {
-        this.referencias = new ArrayList<>();
+
+    public List<Referencia> getReferencias() {
+        if (this.referencias == null) {
+            this.referencias = new ArrayList<>();
+        }
+        return referencias;
     }
-    return referencias;
-}
 
-public void setReferencias(List<Referencia> referencias) {
-    this.referencias = referencias;
-}
+    public void setReferencias(List<Referencia> referencias) {
+        this.referencias = referencias;
+    }
 
-    // Métodos para gestionar seguidores y seguidos
-    /*
     public void seguir(Usuario usuario) {
-        Seguimiento seguimiento = new Seguimiento(this.idUsuario, usuario.getIdUsuario());
-        this.seguidos.add(seguimiento);
-        usuario.getSeguidores().add(seguimiento);
+        if (!this.equals(usuario)) {
+            Seguimiento seguimiento = new Seguimiento(this, usuario);
+            this.seguidos.add(seguimiento);
+            usuario.getSeguidores().add(seguimiento);
+        }
     }
-        */
-
-        public void seguir(Usuario usuario) {
-            if (!this.equals(usuario)) { // Prevenir que un usuario se siga a sí mismo
-                Seguimiento seguimiento = new Seguimiento(this, usuario); // Cambiar aquí
-                this.seguidos.add(seguimiento);
-                usuario.getSeguidores().add(seguimiento);
-            }
-        } 
-/*
-    public void dejarSeguir(Usuario usuario) {
-        this.seguidos.removeIf(s -> s.getIdSeguido().equals(usuario.getIdUsuario()));
-        usuario.getSeguidores().removeIf(s -> s.getIdSeguidor().equals(this.idUsuario));
-    }
-    */
 
     public void dejarSeguir(Usuario usuario) {
-    if (usuario != null && usuario.getIdUsuario() != null) {
-        // Eliminamos el seguimiento de la lista de seguidos
-        seguidos.removeIf(s -> s.getSeguido() != null && s.getSeguido().getIdUsuario() != null && s.getSeguido().getIdUsuario().equals(usuario.getIdUsuario()));
-        
-        // Eliminamos el seguimiento de la lista de seguidores del usuario seguido
-        usuario.getSeguidores().removeIf(s -> s.getSeguidor() != null && s.getSeguidor().getIdUsuario() != null && s.getSeguidor().getIdUsuario().equals(this.getIdUsuario()));
+        if (usuario != null && usuario.getIdUsuario() != null) {
+            seguidos.removeIf(s -> s.getSeguido() != null && s.getSeguido().getIdUsuario() != null && s.getSeguido().getIdUsuario().equals(usuario.getIdUsuario()));
+            usuario.getSeguidores().removeIf(s -> s.getSeguidor() != null && s.getSeguidor().getIdUsuario() != null && s.getSeguidor().getIdUsuario().equals(this.getIdUsuario()));
+        }
     }
-}
-    
 
     public List<Usuario> verSeguidores() {
         List<Usuario> listaSeguidores = new ArrayList<>();
@@ -147,26 +125,18 @@ public void setReferencias(List<Referencia> referencias) {
                 .orElse(null);
     }
 
-    // Métodos para gestionar likes y publicaciones
-/*    public void darLike(Publicacion publicacion, Boolean anonimo) {
-        Like nuevoLike = new Like(this, publicacion, anonimo);
-        this.likes.add(nuevoLike);
-        publicacion.getLikes().add(nuevoLike);
-    }*/
-
     public void darLike(Publicacion publicacion, boolean anonimo) {
         Like like = new Like(this, publicacion, anonimo);
         publicacion.agregarLike(like);
     }
 
     public void darLikePublico(Publicacion publicacion) {
-        darLike(publicacion, false); // Call the existing method with false for public like
+        darLike(publicacion, false);
     }
-    
+
     public void darLikeAnonimo(Publicacion publicacion) {
-        darLike(publicacion, true); // Call the existing method with true for anonymous like
+        darLike(publicacion, true);
     }
-    
 
     public void quitarLike(Publicacion publicacion) {
         publicacion.getLikes().removeIf(l -> l.getUsuario().equals(this));
@@ -193,6 +163,25 @@ public void setReferencias(List<Referencia> referencias) {
         if (this.username.equals(username)) {
             this.username = nuevoUsername;
         }
+    }
+
+    public boolean eliminarPublicacion(Publicacion pubAEliminar) {
+        return this.publicaciones.remove(pubAEliminar);
+    }
+
+    public void hacerReferenciacion(String usuarioRef, Publicacion publicacion, String comentario, Boolean anonimo) {
+        if (publicacion == null || publicacion.getAutor().equals(this)) {
+            throw new IllegalArgumentException("No se puede hacer una referencia a esta publicación.");
+        }
+        Referencia nuevaReferencia = new Referencia(this, publicacion, comentario, usuarioRef, anonimo);
+        if (this.referencias == null) {
+            this.referencias = new ArrayList<>();
+        }
+        this.referencias.add(nuevaReferencia);
+        if (publicacion.getReferencias() == null) {
+            publicacion.setReferencias(new ArrayList<>());
+        }
+        publicacion.getReferencias().add(nuevaReferencia);
     }
 
     // Métodos get/set para cada atributo
@@ -268,6 +257,14 @@ public void setReferencias(List<Referencia> referencias) {
         this.email = email;
     }
 
+    public boolean isNotificacionesActivas() {
+        return notificacionesActivas;
+    }
+
+    public void setNotificacionesActivas(boolean notificacionesActivas) {
+        this.notificacionesActivas = notificacionesActivas;
+    }
+
     public List<Publicacion> getPublicaciones() {
         return publicaciones;
     }
@@ -299,34 +296,6 @@ public void setReferencias(List<Referencia> referencias) {
     public void setSeguidos(List<Seguimiento> seguidos) {
         this.seguidos = seguidos;
     }
-
-    // Método pendiente
-    public boolean eliminarPublicacion(Publicacion pubAEliminar) {
-        return this.publicaciones.remove(pubAEliminar);
-    }
-
-    public void hacerReferenciacion(String usuarioRef, Publicacion publicacion, String comentario, Boolean anonimo) {
-        // Validar que la publicación no sea nula y que el usuario no se esté refiriendo a sí mismo
-        if (publicacion == null || publicacion.getAutor().equals(this)) {
-            throw new IllegalArgumentException("No se puede hacer una referencia a esta publicación.");
-        }
-
-        // Crear la nueva referencia con el usuarioRef (el nombre del usuario etiquetado)
-        Referencia nuevaReferencia = new Referencia(this, publicacion, comentario, usuarioRef, anonimo);
-
-        // Agregar la referencia al usuario (esta clase debe tener una lista de referencias)
-        if (this.referencias == null) {
-            this.referencias = new ArrayList<>();
-        }
-        this.referencias.add(nuevaReferencia);
-
-        // Agregar la referencia a la publicación para mantener la relación bidireccional
-        if (publicacion.getReferencias() == null) {
-            publicacion.setReferencias(new ArrayList<>());
-        }
-        publicacion.getReferencias().add(nuevaReferencia);
-    }
-    
-    
+ 
     
 }
